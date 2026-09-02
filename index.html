@@ -302,7 +302,7 @@
     </p>
     <dl class="who">
       <dt>読み手</dt><dd>コードは書かないがAIでアプリを作っている人。GitHubのアカウントが無くても、段0で作ります。</dd>
-      <dt>使うもの</dt><dd>会話できるAI（Claude、ChatGPT、Cursor など何でも）と、GitHub。</dd>
+      <dt>使うもの</dt><dd>ファイルやターミナルを代わりに操作できるAI（Claude Code、Cursor など）と、GitHub。この段取りでは、コマンドを打つ工程はすべてAIに頼みます。文章を作る段1〜4だけなら、ChatGPTのような会話だけのAIでも回せます。</dd>
       <dt>題材</dt><dd>本文の例はすべて、架空の「オフ会の出欠管理アプリ」で通します。</dd>
     </dl>
   </header>
@@ -426,7 +426,7 @@
         <div class="stage-num">0</div>
         <div>
           <h2>事前準備</h2>
-          <p class="sub">GitHubのアカウント、<code>gh</code> コマンド、アプリのリポジトリを用意する</p>
+          <p class="sub">GitHubのアカウントを自分で作り、道具の導入とリポジトリ作成はAIに頼む</p>
           <p class="weight"><span>最初に一度だけ</span></p>
         </div>
       </div>
@@ -434,8 +434,8 @@
       <div class="part">
         <h3>目的</h3>
         <div>
-          <p>段1〜6は、GitHubを「記録の置き場」として使います。段5でIssueを作り、段6でPull Requestを作るとき、GitHub側の準備が無いとそこで止まります。ここで3つを済ませておきます。</p>
-          <p>3つのうち、<code>gh</code> の導入とリポジトリ作成はAIに任せられます。アカウント作成だけは、メールの確認とパスワードの入力が要るので自分で行います。</p>
+          <p>段1〜6は、GitHubを「記録の置き場」として使います。段5でIssueを作り、段6でPull Requestを作るとき、GitHub側の準備が無いとそこで止まります。ここで準備を済ませておきます。</p>
+          <p>準備は3つです。GitHubのアカウント作成、GitHubをターミナルから扱う道具 <code>gh</code> の導入、アプリ用リポジトリ（保管庫）の作成。このうち<b>自分で行うのはアカウント作成だけ</b>で、残りの2つはAIに頼みます。ターミナルは開きません。</p>
         </div>
       </div>
 
@@ -443,14 +443,14 @@
         <h3>入力と出力</h3>
         <div>
           <dl class="io">
-            <dt>入力</dt><dd>メールアドレスと、アプリを置くフォルダ。</dd>
-            <dt>出力</dt><dd>ログイン済みのGitHubアカウント、ログイン済みの <code>gh</code>、中身が空のアプリ用リポジトリ。</dd>
+            <dt>入力</dt><dd>メールアドレスと、アプリを置くフォルダ（AIを開いているフォルダ）。</dd>
+            <dt>出力</dt><dd>ログイン済みのGitHubアカウント、AIがGitHubを操作できる状態、中身が空のアプリ用リポジトリ。</dd>
           </dl>
         </div>
       </div>
 
       <div class="part">
-        <h3>1. アカウント</h3>
+        <h3>1. アカウント（自分で）</h3>
         <div>
           <ol class="steps" style="margin-top:0">
             <li><a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a> を開き、メールアドレスとパスワードを入れる。</li>
@@ -458,81 +458,62 @@
             <li>届いたメールの確認コードを入れる。プランは無料（Free）で足りる。</li>
             <li>設定から二段階認証（Two-factor authentication）を有効にしておく。スマホの認証アプリで済む。</li>
           </ol>
+          <p style="margin-top:14px">パスワードやメールの確認コードは、AIに渡さず自分で入力します。</p>
         </div>
       </div>
 
       <div class="part">
-        <h3>2. gh コマンド</h3>
+        <h3>2. 道具とリポジトリ（AIに頼む）</h3>
         <div>
-          <p><code>gh</code> はGitHub公式のコマンドラインツールです。これが入っていると、Issueの作成やリポジトリの作成をターミナルの1行で行え、その1行をAIに実行させられます。導入は「入れる」「ログインする」の2手順です。</p>
+          <p>アプリを置きたいフォルダでAIを開き、下の文をそのまま渡します。AIが道具を入れ、GitHubへのログインを案内し、リポジトリを作ってつなぎます。</p>
           <div class="prompt" style="margin-top:12px">
-            <div class="prompt-head"><span class="kind">ターミナルで実行（Mac）</span><button class="copy" type="button">コピー</button></div>
-            <pre># Homebrew（Macのインストーラ）が無ければ先に入れる。brew.sh に載っている1行を実行
-brew install gh
+            <div class="prompt-head"><span class="kind">AIに渡す</span><button class="copy" type="button">コピー</button></div>
+            <pre>GitHub を使う準備を、私の代わりにしてください。私はコードを書かない人間で、ターミナルの操作はしません。
 
-# GitHubにログインする。質問には GitHub.com → HTTPS → Login with a web browser の順で答える
-gh auth login
+やってほしいこと:
+1. GitHub の公式コマンド gh が入っているか確認し、無ければインストールする（git も無ければ一緒に）
+2. gh auth status でログイン済みか確認する。未ログインなら gh auth login を実行し、私がブラウザで押す場面になったら「今、何をどこで押すか」を一言で教える
+3. このフォルダを git で管理する状態にして、README.md と、docs フォルダ（中に案内用の README.md）を作り、初回コミットする
+4. gh repo create で GitHub 上に private（自分だけが見られる）のリポジトリ <span class="var">{アプリ名。半角英数。例: offkai-app}</span> を作り、このフォルダとつないで push する
+5. 最後に gh repo view --web でブラウザに開き、README が見えるかを私に確認してもらう
 
-# 確認。「Logged in to github.com account {ユーザー名}」と出れば完了
-gh auth status</pre>
+守ってほしいこと:
+- 各手順で何をしたかを、私に分かる言葉で1行ずつ報告する
+- 途中で私の操作が必要になったら、止まって待つ
+- 私のパスワードや確認コードを聞かない</pre>
           </div>
-          <div class="prompt">
-            <div class="prompt-head"><span class="kind">ターミナルで実行（Windows）</span><button class="copy" type="button">コピー</button></div>
-            <pre># PowerShell を開いて実行。git が無ければ一緒に入れる
+          <p style="margin-top:14px">途中でAIが「ブラウザを開いてください」と言う場面が1回あります。ログインの許可です。ブラウザにGitHubのページが開くので、AIが示した8桁のコードを貼って「Authorize」を押します。これだけが自分の操作で、あとはAIが進めます。</p>
+          <p style="margin-top:12px">最後にブラウザで開いたリポジトリに、README と <code>docs</code> が見えていれば完了です。<code>docs</code> は、段1〜3で作る要件定義書・仕様書・設計書の置き場になります。</p>
+          <div style="margin-top:16px">
+            <details>
+              <summary>参考: AIが裏で実行しているコマンド（自分で打つ必要はありません）</summary>
+              <div>
+                <div class="prompt" style="margin-top:8px">
+                  <div class="prompt-head"><span class="kind">道具の導入</span><button class="copy" type="button">コピー</button></div>
+                  <pre># Mac
+brew install gh
+# Windows（PowerShell）
 winget install GitHub.cli
 winget install Git.Git
 
-# ここから先は Mac と同じ
+# GitHub にログインし、確認する
 gh auth login
 gh auth status</pre>
-          </div>
-          <p style="margin-top:14px"><code>gh auth login</code> の途中で、ブラウザが開いて8桁のコードを求められます。ターミナルに表示されたコードを貼って「Authorize」を押すと、ターミナル側が自動で進みます。ここだけは自分の手で行います。</p>
-        </div>
-      </div>
-
-      <div class="part">
-        <h3>3. リポジトリ</h3>
-        <div>
-          <p>リポジトリは「アプリ1つにつき1つ」の保管庫です。アプリ用のフォルダを作り、そのフォルダをGitHub上のリポジトリとつなぎます。最初は <code>private</code>（自分だけが見られる）にしておき、公開したくなったら後で切り替えます。</p>
-          <div class="prompt" style="margin-top:12px">
-            <div class="prompt-head"><span class="kind">ターミナルで実行</span><button class="copy" type="button">コピー</button></div>
-            <pre># アプリ用のフォルダを作って移動する（名前は半角英数。例: offkai-app）
-mkdir <span class="var">{アプリ名}</span>
-cd <span class="var">{アプリ名}</span>
-
-# このフォルダを git で管理し始める。最初の1ファイルとして README を置く
-git init
+                </div>
+                <div class="prompt">
+                  <div class="prompt-head"><span class="kind">リポジトリの作成</span><button class="copy" type="button">コピー</button></div>
+                  <pre>git init
 echo "# <span class="var">{アプリ名}</span>" > README.md
 mkdir docs
 echo "要件定義書・仕様書・設計書をここに置く" > docs/README.md
 git add .
 git commit -m "初回コミット"
-
-# GitHub 上にリポジトリを作り、このフォルダとつないで送る（private = 自分だけが見られる）
 gh repo create <span class="var">{アプリ名}</span> --private --source=. --push
-
-# ブラウザで開いて、README が見えることを確認する
 gh repo view --web</pre>
-          </div>
-          <p style="margin-top:14px"><code>docs</code> フォルダは、段1〜3で作る要件定義書・仕様書・設計書の置き場です。ここに置いておくと、段5の親Issueからリンクでき、次の会話のAIにも「<code>docs/</code> を読んで」で渡せます。</p>
-        </div>
-      </div>
-
-      <div class="part">
-        <h3>プロンプト</h3>
-        <div>
-          <p>手順2と3は、ターミナルを操作できるAI（Claude Code など）にそのまま頼めます。ブラウザでのログイン許可だけは自分で押します。</p>
-          <div class="prompt" style="margin-top:12px">
-            <div class="prompt-head"><span class="kind">AIに渡す</span><button class="copy" type="button">コピー</button></div>
-            <pre>GitHub を使う準備をしてください。私はコードを書かない人間です。
-
-1. gh コマンドが入っているか確認し、無ければインストールする
-2. gh auth status でログイン済みか確認する。未ログインなら gh auth login を実行し、私がブラウザで許可する手順を案内する
-3. このフォルダを git 管理にして、README.md と、docs フォルダ（中に案内用の README.md）を作り、初回コミットする
-4. gh repo create で GitHub に private のリポジトリ <span class="var">{アプリ名}</span> を作り、このフォルダとつないで push する
-5. 最後に gh repo view --web でブラウザに開き、README が見えることを確認する
-
-各手順で何をしたか、私に分かる言葉で1行ずつ報告してください。</pre>
+                </div>
+                <p style="margin-top:10px">AIの報告にこれらの名前が出てきたときに、何をしているかを照らし合わせる用です。</p>
+              </div>
+            </details>
           </div>
         </div>
       </div>
@@ -542,10 +523,9 @@ gh repo view --web</pre>
         <div>
           <ul class="done">
             <li>GitHubにブラウザでログインでき、二段階認証が有効になっている</li>
-            <li><code>gh auth status</code> が「Logged in」と表示する</li>
-            <li><code>git remote -v</code> で、自分のリポジトリのURLが表示される</li>
+            <li>AIに「<code>gh auth status</code> の結果を見せて」と頼むと、「Logged in」を含む結果が返ってくる</li>
             <li>ブラウザでリポジトリを開くと、README と <code>docs</code> が見える</li>
-            <li>リポジトリが <code>private</code> になっている（リポジトリ名の横に Private と表示される）</li>
+            <li>リポジトリ名の横に Private と表示されている</li>
           </ul>
         </div>
       </div>
@@ -553,9 +533,9 @@ gh repo view --web</pre>
       <div class="part">
         <h3>よくある失敗</h3>
         <div class="pitfalls">
-          <div class="pitfall"><b>ログインを飛ばして先へ進む。</b>段5で <code>gh issue create</code> が「認証されていません」で失敗します。<code>gh auth login</code> を1回実行すれば直ります。</div>
-          <div class="pitfall"><b>private のつもりが public になっている。</b>会場や会費のような実データを入れる前に、リポジトリ名の横の表示を確認します。切り替えは設定画面からいつでもできます。</div>
-          <div class="pitfall"><b>フォルダごとにリポジトリを作る。</b>「画面用」「データ用」と分けると、Issueや変更の記録が散ります。アプリ1つにリポジトリ1つです。</div>
+          <div class="pitfall"><b>コマンドを自分で打とうとして詰まる。</b>この段取りでは、ターミナルに向かう工程はすべてAIに頼みます。AIの報告に知らない言葉が出てきたら、「それは何をしたの」と聞き返せば十分です。</div>
+          <div class="pitfall"><b>ログインの許可を飛ばす。</b>AIが「ブラウザで押してください」と言った場面を放置すると、段5のIssue登録が「認証されていません」で失敗します。AIに「もう一度ログインを案内して」と頼めば、やり直せます。</div>
+          <div class="pitfall"><b>private のつもりが public になっている。</b>会場や会費のような実データを入れる前に、リポジトリ名の横の表示を確認します。切り替えはAIに「このリポジトリを private にして」と頼めます。</div>
         </div>
       </div>
     </section>
@@ -1231,7 +1211,8 @@ Refs #<span class="var">{親Issueの番号}</span></pre>
 - タイトルは「feat: {何ができるようになるか}」の形
 - 「完了条件」は、タスク一覧の完了条件をそのまま使う。私が触って確認できる文になっていなければ直す
 - 親Issueを1つ作り、子Issueを並べる。親の本文には「子から親へは Refs で参照」と明記する
-- 私が GitHub の画面に貼り付けられるように、Issueごとに区切って出す
+- 書き終えたら、私に一度見せて確認を取る。確認後に gh issue create で登録する。親を先に作り、返ってきた番号を子の Refs に入れる
+- 登録が終わったら gh issue list の結果を見せる
 
 子Issueのテンプレート:
 ## 概要
@@ -1249,11 +1230,23 @@ Refs #{親の番号}
       <div class="part">
         <h3>gh コマンド</h3>
         <div>
-          <p>GitHubの画面でIssueを5本作るのは、手作業としては意外に重いです。GitHub公式のコマンドラインツール <code>gh</code> を入れると、ターミナルから1行でIssueを作れ、しかもその1行をAIにそのまま実行させられます。段5をAIに任せきる鍵はこの道具です。</p>
-          <p style="margin-top:12px">導入とログインは段0で済んでいる前提です。動かなければ <code>gh auth status</code> で確認し、未ログインなら <code>gh auth login</code> を実行します。アプリのフォルダで実行するのがポイントで、どのリポジトリにIssueを作るかはフォルダから自動で決まります。</p>
-          <div class="prompt" style="margin-top:16px">
-            <div class="prompt-head"><span class="kind">よく使う gh コマンド</span><button class="copy" type="button">コピー</button></div>
-            <pre># 親Issueを作る（本文はファイルから渡す。番号が返ってくる）
+          <p>GitHubの画面でIssueを5本作るのは、手作業としては意外に重いです。段0で入れた <code>gh</code>（GitHub公式のコマンドラインツール）があると、AIがIssueの登録、一覧、内容の確認、書き換えをすべて代行できます。上のプロンプトの最後の2行が、その指示です。</p>
+          <p style="margin-top:12px">登録後の確認や手直しも、AIに頼みます。</p>
+          <div class="prompt" style="margin-top:12px">
+            <div class="prompt-head"><span class="kind">AIに渡す（確認と手直し）</span><button class="copy" type="button">コピー</button></div>
+            <pre>登録した Issue を確認したい。
+- gh issue list で一覧を見せて
+- Issue #<span class="var">{番号}</span> の本文を見せて
+- 親 Issue #<span class="var">{親の番号}</span> の「子Issue」の一覧を、確定した番号で書き直して</pre>
+          </div>
+          <p style="margin-top:14px">うまくいかないときは、たいてい段0のログインが切れています。AIに「<code>gh auth status</code> を確認して、未ログインなら案内して」と頼めば直ります。</p>
+          <div style="margin-top:16px">
+            <details>
+              <summary>参考: AIが裏で実行しているコマンド（自分で打つ必要はありません）</summary>
+              <div>
+                <div class="prompt" style="margin-top:8px">
+                  <div class="prompt-head"><span class="kind">よく使う gh コマンド</span><button class="copy" type="button">コピー</button></div>
+                  <pre># 親Issueを作る（本文はファイルから渡す。番号が返ってくる）
 gh issue create --title "chore: オフ会アプリ v1（親）" --body-file parent.md
 
 # 子Issueを作る（ラベルも同時に付ける）
@@ -1268,8 +1261,11 @@ gh issue edit 1 --body-file parent.md
 
 # 終わったIssueを閉じる（PRの Closes #4 で自動的に閉じるなら不要）
 gh issue close 4</pre>
+                </div>
+                <p style="margin-top:10px">本文は <code>--body-file</code> でファイルから渡すのが安全で、ファイルが手元に残るので後から見直せます。</p>
+              </div>
+            </details>
           </div>
-          <p style="margin-top:14px">本文は <code>--body-file</code> でファイルから渡します。複数行や記号が崩れず、ファイルが手元に残るので後から見直せます。AIには「上の本文を <code>issue-4.md</code> に保存して、<code>gh issue create</code> で登録して」と頼めば、ファイル作成から登録まで任せられます。親を先に作ると番号が確定するので、子の <code>Refs</code> に入れられます。</p>
         </div>
       </div>
 
@@ -1351,12 +1347,12 @@ gh issue close 4</pre>
         <div>
           <ol class="steps" style="margin-top:0">
             <li>次のIssueの番号を選ぶ。依存が終わっているものだけ。</li>
-            <li>AIにIssueの本文を渡して実装させる。会話の最初に仕様書と設計書も貼っておくと前提がぶれない。</li>
-            <li>AIが「できた」と言ったら、<b>別の新しい会話</b>で、変更内容を見せてレビューさせる。同じ会話の中のAIは自分の仕事を甘く採点する。</li>
-            <li>レビューで出た指摘を直させる。</li>
-            <li>自分でアプリを触って、Issueの完了条件を1つずつ確認する。満たしていなければ2に戻る。</li>
-            <li>変更をPull Requestにして、本文に <code>Closes #番号</code> を書き、マージする。Issueは自動で閉じる。</li>
-            <li>親Issueのチェックを入れて、次のIssueへ。</li>
+            <li>AIに「Issue #番号 を読んで実装して」と頼む。会話の最初に仕様書と設計書を貼っておくと前提がぶれない。<code>gh</code> があれば、AIがIssueの本文を自分で読みに行く。</li>
+            <li>AIが「できた」と言ったら、そのAIに「レビュー用に、変更した内容をまとめて review.md に書いて」と頼む。それを<b>別の新しい会話</b>のAIに貼ってレビューさせる。同じ会話の中のAIは自分の仕事を甘く採点する。</li>
+            <li>レビューの指摘を、実装した側の会話に貼って直させる。</li>
+            <li>AIに「動かして」と頼み、表示されたURLをブラウザで開いて、Issueの完了条件を1つずつ自分で確認する。満たしていなければ2に戻る。</li>
+            <li>AIに「Pull Request を作って。本文に <code>Closes #番号</code> を入れて」と頼む。GitHubの画面でそのPull Requestを開き、「Merge pull request」を押す。Issueは自動で閉じる。</li>
+            <li>AIに「親Issueの #番号 にチェックを入れて」と頼み、次のIssueへ。</li>
           </ol>
         </div>
       </div>
@@ -1376,7 +1372,7 @@ gh issue close 4</pre>
 <span class="var">{段3の設計書}</span>
 
 Issue #<span class="var">{番号}</span>:
-<span class="var">{Issueの本文をそのまま貼る}</span></pre>
+<span class="var">{Issueの本文をそのまま貼る。gh があれば「gh issue view {番号} で読んで」でもよい}</span></pre>
           </div>
           <div class="prompt">
             <div class="prompt-head"><span class="kind">別の会話でレビューさせる</span><button class="copy" type="button">コピー</button></div>
@@ -1393,7 +1389,7 @@ Issue #<span class="var">{番号}</span>:
 <span class="var">{Issueの本文}</span>
 
 変更内容:
-<span class="var">{差分、または変更したファイル}</span></pre>
+<span class="var">{実装したAIに作らせた review.md の中身を貼る}</span></pre>
           </div>
         </div>
       </div>
@@ -1412,7 +1408,7 @@ Issue #<span class="var">{番号}</span>:
       <div class="part">
         <h3>よくある失敗</h3>
         <div class="pitfalls">
-          <div class="pitfall"><b>AIの「できました」を信じてマージする。</b>完了条件は自分で触って確認するためのものです。ここを省くと、段1〜5の意味が無くなります。</div>
+          <div class="pitfall"><b>AIの「できました」を信じてマージする。</b>完了条件は自分で触って確認するためのものです。マージのボタンを押すのは自分なので、その前に手順5を必ず通します。ここを省くと、段1〜5の意味が無くなります。</div>
           <div class="pitfall"><b>レビューを同じ会話でやる。</b>実装したAIに「問題ないか」と聞くと、ほぼ「問題ありません」と返ってきます。会話を分けるだけで指摘の質が変わります。</div>
           <div class="pitfall"><b>実行中に仕様を変える。</b>作りながら「やっぱりこうしたい」と思ったら、その場で足さず、新しいIssueにして親に追加します。今のIssueは今の完了条件で終わらせます。</div>
         </div>
