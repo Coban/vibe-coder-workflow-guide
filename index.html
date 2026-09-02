@@ -301,7 +301,7 @@
       AIに「こういうアプリ作って」と頼むと、最初は驚くほど速く動くものが出てきます。ところが機能を足すたびに前の動きが壊れ、何が完成で何が未完成なのか自分でも分からなくなる。この段取りは、その状態を避けるために、作るものを先に文章で固め、小さなタスクに切ってGitHub Issueで管理し、1本ずつAIに渡していく流れです。
     </p>
     <dl class="who">
-      <dt>読み手</dt><dd>コードは書かないがAIでアプリを作っている人。GitHubのアカウントは持っている、または作れる。</dd>
+      <dt>読み手</dt><dd>コードは書かないがAIでアプリを作っている人。GitHubのアカウントが無くても、段0で作ります。</dd>
       <dt>使うもの</dt><dd>会話できるAI（Claude、ChatGPT、Cursor など何でも）と、GitHub。</dd>
       <dt>題材</dt><dd>本文の例はすべて、架空の「オフ会の出欠管理アプリ」で通します。</dd>
     </dl>
@@ -312,6 +312,7 @@
     <ol>
       <li><a href="#flow">全体の流れ</a></li>
       <li><a href="#why">なぜこの順番か</a></li>
+      <li class="stage"><a href="#s0"><b>0</b>事前準備</a></li>
       <li class="stage"><a href="#s1"><b>1</b>要件定義</a></li>
       <li class="stage"><a href="#s2"><b>2</b>仕様書</a></li>
       <li class="stage"><a href="#s3"><b>3</b>設計書</a></li>
@@ -327,7 +328,7 @@
     <section class="block" id="flow">
       <h2>全体の流れ</h2>
       <p>
-        6段あります。各段は「前の段の成果物を受け取り、次の段の成果物を作る」だけの単純な受け渡しです。本題は最初の5段で、6段目の実行はここで作ったIssueを1本ずつ消化する作業になります。
+        本編は6段あります。各段は「前の段の成果物を受け取り、次の段の成果物を作る」だけの単純な受け渡しです。本題は最初の5段で、6段目の実行はここで作ったIssueを1本ずつ消化する作業になります。その前に、GitHubのアカウントと道具を用意する事前準備（段0）を一度だけ行います。
       </p>
       <figure>
         <div class="fig-scroll">
@@ -415,8 +416,148 @@
         <li><b>小さく切ると、確認できる。</b>「アプリ全部」は動作確認のしようがありませんが、「日程候補に○×で答えられる」なら5分で確認できます。Issueはその確認単位を記録する場所です。</li>
       </ul>
       <p>
-        以下、6段それぞれを同じ型で説明します。目的、入力と出力、AIに渡すプロンプト、成果物のテンプレート、オフ会アプリでの例、完了チェック、よくある失敗の7項目です。プロンプトとテンプレートはそのままコピーして使えます。
+        以下、まず一度だけ行う事前準備（段0）を置き、そのあと6段それぞれを同じ型で説明します。型は、目的、入力と出力、AIに渡すプロンプト、成果物のテンプレート、オフ会アプリでの例、完了チェック、よくある失敗の7項目です。プロンプトとテンプレートはそのままコピーして使えます。
       </p>
+    </section>
+
+    <!-- ========== STAGE 0 ========== -->
+    <section class="stage" id="s0">
+      <div class="stage-head">
+        <div class="stage-num">0</div>
+        <div>
+          <h2>事前準備</h2>
+          <p class="sub">GitHubのアカウント、<code>gh</code> コマンド、アプリのリポジトリを用意する</p>
+          <p class="weight"><span>最初に一度だけ</span></p>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>目的</h3>
+        <div>
+          <p>段1〜6は、GitHubを「記録の置き場」として使います。段5でIssueを作り、段6でPull Requestを作るとき、GitHub側の準備が無いとそこで止まります。ここで3つを済ませておきます。</p>
+          <p>3つのうち、<code>gh</code> の導入とリポジトリ作成はAIに任せられます。アカウント作成だけは、メールの確認とパスワードの入力が要るので自分で行います。</p>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>入力と出力</h3>
+        <div>
+          <dl class="io">
+            <dt>入力</dt><dd>メールアドレスと、アプリを置くフォルダ。</dd>
+            <dt>出力</dt><dd>ログイン済みのGitHubアカウント、ログイン済みの <code>gh</code>、中身が空のアプリ用リポジトリ。</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>1. アカウント</h3>
+        <div>
+          <ol class="steps" style="margin-top:0">
+            <li><a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a> を開き、メールアドレスとパスワードを入れる。</li>
+            <li>ユーザー名を決める。半角英数とハイフンだけ。後でリポジトリのURLに入るので、あとから変えにくい。</li>
+            <li>届いたメールの確認コードを入れる。プランは無料（Free）で足りる。</li>
+            <li>設定から二段階認証（Two-factor authentication）を有効にしておく。スマホの認証アプリで済む。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>2. gh コマンド</h3>
+        <div>
+          <p><code>gh</code> はGitHub公式のコマンドラインツールです。これが入っていると、Issueの作成やリポジトリの作成をターミナルの1行で行え、その1行をAIに実行させられます。導入は「入れる」「ログインする」の2手順です。</p>
+          <div class="prompt" style="margin-top:12px">
+            <div class="prompt-head"><span class="kind">ターミナルで実行（Mac）</span><button class="copy" type="button">コピー</button></div>
+            <pre># Homebrew（Macのインストーラ）が無ければ先に入れる。brew.sh に載っている1行を実行
+brew install gh
+
+# GitHubにログインする。質問には GitHub.com → HTTPS → Login with a web browser の順で答える
+gh auth login
+
+# 確認。「Logged in to github.com account {ユーザー名}」と出れば完了
+gh auth status</pre>
+          </div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="kind">ターミナルで実行（Windows）</span><button class="copy" type="button">コピー</button></div>
+            <pre># PowerShell を開いて実行。git が無ければ一緒に入れる
+winget install GitHub.cli
+winget install Git.Git
+
+# ここから先は Mac と同じ
+gh auth login
+gh auth status</pre>
+          </div>
+          <p style="margin-top:14px"><code>gh auth login</code> の途中で、ブラウザが開いて8桁のコードを求められます。ターミナルに表示されたコードを貼って「Authorize」を押すと、ターミナル側が自動で進みます。ここだけは自分の手で行います。</p>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>3. リポジトリ</h3>
+        <div>
+          <p>リポジトリは「アプリ1つにつき1つ」の保管庫です。アプリ用のフォルダを作り、そのフォルダをGitHub上のリポジトリとつなぎます。最初は <code>private</code>（自分だけが見られる）にしておき、公開したくなったら後で切り替えます。</p>
+          <div class="prompt" style="margin-top:12px">
+            <div class="prompt-head"><span class="kind">ターミナルで実行</span><button class="copy" type="button">コピー</button></div>
+            <pre># アプリ用のフォルダを作って移動する（名前は半角英数。例: offkai-app）
+mkdir <span class="var">{アプリ名}</span>
+cd <span class="var">{アプリ名}</span>
+
+# このフォルダを git で管理し始める。最初の1ファイルとして README を置く
+git init
+echo "# <span class="var">{アプリ名}</span>" > README.md
+mkdir docs
+echo "要件定義書・仕様書・設計書をここに置く" > docs/README.md
+git add .
+git commit -m "初回コミット"
+
+# GitHub 上にリポジトリを作り、このフォルダとつないで送る（private = 自分だけが見られる）
+gh repo create <span class="var">{アプリ名}</span> --private --source=. --push
+
+# ブラウザで開いて、README が見えることを確認する
+gh repo view --web</pre>
+          </div>
+          <p style="margin-top:14px"><code>docs</code> フォルダは、段1〜3で作る要件定義書・仕様書・設計書の置き場です。ここに置いておくと、段5の親Issueからリンクでき、次の会話のAIにも「<code>docs/</code> を読んで」で渡せます。</p>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>プロンプト</h3>
+        <div>
+          <p>手順2と3は、ターミナルを操作できるAI（Claude Code など）にそのまま頼めます。ブラウザでのログイン許可だけは自分で押します。</p>
+          <div class="prompt" style="margin-top:12px">
+            <div class="prompt-head"><span class="kind">AIに渡す</span><button class="copy" type="button">コピー</button></div>
+            <pre>GitHub を使う準備をしてください。私はコードを書かない人間です。
+
+1. gh コマンドが入っているか確認し、無ければインストールする
+2. gh auth status でログイン済みか確認する。未ログインなら gh auth login を実行し、私がブラウザで許可する手順を案内する
+3. このフォルダを git 管理にして、README.md と、docs フォルダ（中に案内用の README.md）を作り、初回コミットする
+4. gh repo create で GitHub に private のリポジトリ <span class="var">{アプリ名}</span> を作り、このフォルダとつないで push する
+5. 最後に gh repo view --web でブラウザに開き、README が見えることを確認する
+
+各手順で何をしたか、私に分かる言葉で1行ずつ報告してください。</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>完了チェック</h3>
+        <div>
+          <ul class="done">
+            <li>GitHubにブラウザでログインでき、二段階認証が有効になっている</li>
+            <li><code>gh auth status</code> が「Logged in」と表示する</li>
+            <li><code>git remote -v</code> で、自分のリポジトリのURLが表示される</li>
+            <li>ブラウザでリポジトリを開くと、README と <code>docs</code> が見える</li>
+            <li>リポジトリが <code>private</code> になっている（リポジトリ名の横に Private と表示される）</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>よくある失敗</h3>
+        <div class="pitfalls">
+          <div class="pitfall"><b>ログインを飛ばして先へ進む。</b>段5で <code>gh issue create</code> が「認証されていません」で失敗します。<code>gh auth login</code> を1回実行すれば直ります。</div>
+          <div class="pitfall"><b>private のつもりが public になっている。</b>会場や会費のような実データを入れる前に、リポジトリ名の横の表示を確認します。切り替えは設定画面からいつでもできます。</div>
+          <div class="pitfall"><b>フォルダごとにリポジトリを作る。</b>「画面用」「データ用」と分けると、Issueや変更の記録が散ります。アプリ1つにリポジトリ1つです。</div>
+        </div>
+      </div>
     </section>
 
     <!-- ========== STAGE 1 ========== -->
@@ -1109,12 +1250,7 @@ Refs #{親の番号}
         <h3>gh コマンド</h3>
         <div>
           <p>GitHubの画面でIssueを5本作るのは、手作業としては意外に重いです。GitHub公式のコマンドラインツール <code>gh</code> を入れると、ターミナルから1行でIssueを作れ、しかもその1行をAIにそのまま実行させられます。段5をAIに任せきる鍵はこの道具です。</p>
-          <p style="margin-top:12px">導入は3手順です。</p>
-          <ol class="steps" style="margin-top:8px">
-            <li>インストールする。Macは <code>brew install gh</code>、Windowsは <code>winget install GitHub.cli</code>。</li>
-            <li><code>gh auth login</code> を実行し、ブラウザでGitHubにログインして許可する。1回だけ。</li>
-            <li>アプリのフォルダがGitHubのリポジトリとつながっている（<code>git remote -v</code> でURLが出る）ことを確認する。</li>
-          </ol>
+          <p style="margin-top:12px">導入とログインは段0で済んでいる前提です。動かなければ <code>gh auth status</code> で確認し、未ログインなら <code>gh auth login</code> を実行します。アプリのフォルダで実行するのがポイントで、どのリポジトリにIssueを作るかはフォルダから自動で決まります。</p>
           <div class="prompt" style="margin-top:16px">
             <div class="prompt-head"><span class="kind">よく使う gh コマンド</span><button class="copy" type="button">コピー</button></div>
             <pre># 親Issueを作る（本文はファイルから渡す。番号が返ってくる）
