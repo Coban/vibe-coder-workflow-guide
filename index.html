@@ -227,10 +227,11 @@
   .example-body p + p { margin-top: 8px; }
   .example-body ul { padding-left: 1.3em; margin: 0; }
   .example-body ul.check { list-style: none; padding-left: 0; }
-  .example-body ul.check li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; align-items: start; }
+  .example-body ul.check li { position: relative; padding-left: 26px; }
   .example-body ul.check li::before {
     content: "";
-    width: 14px; height: 14px; margin-top: 7px;
+    position: absolute; left: 0; top: 7px;
+    width: 14px; height: 14px;
     border: 1px solid var(--line-strong); border-radius: 3px; background: var(--bg);
   }
   .example-body table { border-collapse: collapse; width: 100%; font-size: 14px; }
@@ -247,10 +248,11 @@
 
   /* Checklist */
   ul.done { list-style: none; padding-left: 0; }
-  ul.done li { display: grid; grid-template-columns: 18px 1fr; gap: 10px; align-items: start; }
+  ul.done li { position: relative; padding-left: 28px; }
   ul.done li::before {
     content: "";
-    width: 14px; height: 14px; margin-top: 8px;
+    position: absolute; left: 0; top: 8px;
+    width: 14px; height: 14px;
     border: 1.5px solid var(--accent); border-radius: 3px;
   }
 
@@ -271,12 +273,13 @@
   .cmp th { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; color: var(--muted); border-top: none; }
   .cmp td:first-child { white-space: nowrap; font-weight: 500; }
   .steps { counter-reset: s; list-style: none; padding: 0; margin-top: 16px; display: grid; gap: 10px; max-width: 66ch; }
-  .steps li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; }
+  .steps li { position: relative; padding-left: 38px; }
   .steps li::before {
     counter-increment: s; content: counter(s);
+    position: absolute; left: 0; top: 4px;
     font-family: var(--mono); font-size: 13px; color: var(--accent-ink);
     border: 1px solid var(--line-strong); border-radius: 999px; width: 24px; height: 24px;
-    display: grid; place-items: center; margin-top: 4px;
+    display: grid; place-items: center;
   }
   details { border-top: 1px solid var(--line); }
   details:last-of-type { border-bottom: 1px solid var(--line); }
