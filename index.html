@@ -1,3 +1,6 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>要件からIssueへ</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
@@ -160,7 +163,7 @@
   }
   .weight span.main { border-color: var(--accent); color: var(--accent-ink); }
 
-  .part { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 32px; }
+  .part { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; margin-top: 32px; }
   @media (min-width: 720px) { .part { grid-template-columns: 148px minmax(0, 1fr); column-gap: 24px; } }
   .part > h3 {
     font-family: var(--mono);
