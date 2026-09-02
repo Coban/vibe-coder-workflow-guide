@@ -1,0 +1,1211 @@
+<title>要件からIssueへ</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #F6F8F5;
+    --surface: #FFFFFF;
+    --ink: #1A232B;
+    --muted: #5A6771;
+    --line: #D8DFD9;
+    --line-strong: #B9C3BC;
+    --accent: #0F6E56;
+    --accent-ink: #0B5A46;
+    --accent-soft: #E3F1EB;
+    --code-bg: #EEF2EE;
+    --warn: #8A4B12;
+    --warn-soft: #F7ECDF;
+    --focus: #1F7AE0;
+    --display: "Zen Kaku Gothic New", "Hiragino Sans", "Noto Sans JP", sans-serif;
+    --body: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+    --mono: "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #13181C;
+      --surface: #1A2126;
+      --ink: #E7EBE8;
+      --muted: #9FABB1;
+      --line: #2C353B;
+      --line-strong: #46525A;
+      --accent: #4CC094;
+      --accent-ink: #7ED7B4;
+      --accent-soft: #183129;
+      --code-bg: #0F1417;
+      --warn: #E0A56A;
+      --warn-soft: #2E2318;
+      --focus: #6FB1FF;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #13181C;
+    --surface: #1A2126;
+    --ink: #E7EBE8;
+    --muted: #9FABB1;
+    --line: #2C353B;
+    --line-strong: #46525A;
+    --accent: #4CC094;
+    --accent-ink: #7ED7B4;
+    --accent-soft: #183129;
+    --code-bg: #0F1417;
+    --warn: #E0A56A;
+    --warn-soft: #2E2318;
+    --focus: #6FB1FF;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent-ink); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  h1, h2, h3, h4 { font-family: var(--display); font-weight: 700; line-height: 1.35; text-wrap: balance; margin: 0; }
+  p { margin: 0; }
+  code { font-family: var(--mono); font-size: 0.9em; background: var(--code-bg); padding: 0.1em 0.4em; border-radius: 4px; }
+  pre { margin: 0; }
+
+  .page {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 20px 96px;
+  }
+  @media (min-width: 1000px) {
+    .page { display: grid; grid-template-columns: 216px minmax(0, 1fr); column-gap: 56px; }
+    .toc { position: sticky; top: 24px; align-self: start; }
+    header.intro, main { grid-column: 2; }
+    .toc { grid-column: 1; grid-row: 2; }
+  }
+
+  header.intro { padding: 56px 0 40px; border-bottom: 1px solid var(--line); }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  header.intro h1 { font-size: clamp(30px, 4.6vw, 44px); margin-top: 12px; }
+  .lede { max-width: 66ch; margin-top: 20px; font-size: 17px; }
+  .who {
+    margin-top: 28px;
+    display: grid;
+    gap: 6px 20px;
+    grid-template-columns: max-content 1fr;
+    font-size: 15px;
+  }
+  .who dt { color: var(--muted); font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; padding-top: 5px; }
+  .who dd { margin: 0; }
+
+  .toc { margin-top: 32px; font-size: 14px; }
+  .toc .eyebrow { margin-bottom: 10px; }
+  .toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line); }
+  .toc li a {
+    display: block;
+    padding: 5px 0 5px 14px;
+    color: var(--muted);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    margin-left: -1px;
+  }
+  .toc li a:hover { color: var(--ink); }
+  .toc li.stage a { color: var(--ink); }
+  .toc li.stage a b { font-family: var(--mono); font-weight: 500; color: var(--accent-ink); margin-right: 8px; }
+
+  main { max-width: none; min-width: 0; }
+  section.block { padding: 48px 0; border-bottom: 1px solid var(--line); }
+  section.block > h2 { font-size: 26px; }
+  section.block > p, section.block > ul, section.block > ol { max-width: 66ch; }
+  section.block > p + p { margin-top: 14px; }
+  section.block > h2 + p { margin-top: 18px; }
+  section.block ul, section.block ol { padding-left: 1.4em; margin: 14px 0 0; }
+  section.block li + li { margin-top: 6px; }
+
+  figure { margin: 28px 0 0; }
+  figure svg { display: block; width: 100%; height: auto; }
+  figcaption { margin-top: 12px; font-size: 14px; color: var(--muted); max-width: 66ch; }
+  .fig-scroll { overflow-x: auto; }
+  .fig-scroll svg { min-width: 720px; }
+
+  /* Stage sections */
+  section.stage { padding: 56px 0; border-bottom: 1px solid var(--line); }
+  section.stage.thin { padding-bottom: 40px; }
+  .stage-head { max-width: 66ch; display: grid; grid-template-columns: 64px 1fr; column-gap: 18px; align-items: start; }
+  .stage-num {
+    font-family: var(--display);
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--accent);
+    padding-top: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .stage-head h2 { font-size: 28px; }
+  .stage-head .sub { color: var(--muted); margin-top: 6px; font-size: 15px; }
+  .weight { margin-top: 6px; }
+  .weight span {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 2px 8px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--muted);
+  }
+  .weight span.main { border-color: var(--accent); color: var(--accent-ink); }
+
+  .part { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 32px; }
+  @media (min-width: 720px) { .part { grid-template-columns: 148px minmax(0, 1fr); column-gap: 24px; } }
+  .part > h3 {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    padding-top: 6px;
+  }
+  .part > div > p + p { margin-top: 12px; }
+  .part > div > p, .part li, .part .io, .part .rule, .part .pitfall { max-width: 66ch; }
+  .part ul, .part ol { padding-left: 1.4em; margin: 0; }
+  .part li + li { margin-top: 6px; }
+  .part .io { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; }
+  .part .io dt { color: var(--muted); }
+  .part .io dd { margin: 0; }
+
+  /* Prompt / template blocks */
+  .prompt { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); overflow: hidden; }
+  .prompt + .prompt { margin-top: 14px; }
+  .prompt-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 8px 12px 8px 14px;
+    border-bottom: 1px solid var(--line);
+    background: var(--code-bg);
+    font-size: 13px; color: var(--muted);
+  }
+  .prompt-head .kind { font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; }
+  .prompt pre {
+    font-family: var(--mono);
+    font-size: 13.5px;
+    line-height: 1.7;
+    padding: 14px 16px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .prompt pre .var { color: var(--accent-ink); font-weight: 500; }
+  button.copy {
+    font-family: var(--body);
+    font-size: 12.5px;
+    color: var(--accent-ink);
+    background: transparent;
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    padding: 3px 10px;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+  }
+  button.copy:hover { background: var(--accent-soft); }
+  button.copy.done { background: var(--accent); color: var(--surface); border-color: var(--accent); }
+  @media (prefers-reduced-motion: reduce) { button.copy { transition: none; } }
+
+  /* Example (GitHub-like rendering) */
+  .example { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+  .example-head { padding: 10px 16px; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .example-head .title { color: var(--ink); font-weight: 500; font-size: 14px; }
+  .example-head .label { font-family: var(--mono); font-size: 11px; border: 1px solid var(--line-strong); border-radius: 999px; padding: 1px 8px; }
+  .example-head .label.open { border-color: var(--accent); color: var(--accent-ink); background: var(--accent-soft); }
+  .example-body { padding: 14px 16px 16px; font-size: 14.5px; }
+  .example-body h4 { font-family: var(--body); font-size: 14.5px; font-weight: 700; margin: 0; padding-bottom: 4px; border-bottom: 1px solid var(--line); }
+  .example-body h4 + * { margin-top: 8px; }
+  .example-body * + h4 { margin-top: 16px; }
+  .example-body p + p { margin-top: 8px; }
+  .example-body ul { padding-left: 1.3em; margin: 0; }
+  .example-body ul.check { list-style: none; padding-left: 0; }
+  .example-body ul.check li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; align-items: start; }
+  .example-body ul.check li::before {
+    content: "";
+    width: 14px; height: 14px; margin-top: 7px;
+    border: 1px solid var(--line-strong); border-radius: 3px; background: var(--bg);
+  }
+  .example-body table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  .example-body th, .example-body td { border: 1px solid var(--line); padding: 5px 10px; text-align: left; vertical-align: top; }
+  .example-body th { background: var(--code-bg); font-weight: 500; }
+  .example-body .meta { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .table-scroll { overflow-x: auto; }
+
+  /* Rules */
+  .rules { display: grid; gap: 12px; }
+  .rule { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; }
+  .rule b { display: block; font-family: var(--display); font-size: 16px; }
+  .rule p { margin-top: 4px; font-size: 15px; }
+
+  /* Checklist */
+  ul.done { list-style: none; padding-left: 0; }
+  ul.done li { display: grid; grid-template-columns: 18px 1fr; gap: 10px; align-items: start; }
+  ul.done li::before {
+    content: "";
+    width: 14px; height: 14px; margin-top: 8px;
+    border: 1.5px solid var(--accent); border-radius: 3px;
+  }
+
+  /* Pitfalls */
+  .pitfalls { display: grid; gap: 10px; }
+  .pitfall { background: var(--warn-soft); border-radius: 6px; padding: 10px 14px; font-size: 15px; }
+  .pitfall b { color: var(--warn); font-weight: 700; }
+
+  /* Appendix */
+  .cc-note {
+    border: 1px solid var(--accent); border-radius: 8px; background: var(--accent-soft);
+    padding: 14px 18px; font-size: 15px; margin-top: 20px; max-width: 66ch;
+  }
+  .cc-note b { font-family: var(--display); }
+  .cmp { margin-top: 24px; }
+  .cmp table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  .cmp th, .cmp td { border-top: 1px solid var(--line); padding: 10px 12px 10px 0; text-align: left; vertical-align: top; }
+  .cmp th { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; color: var(--muted); border-top: none; }
+  .cmp td:first-child { white-space: nowrap; font-weight: 500; }
+  .steps { counter-reset: s; list-style: none; padding: 0; margin-top: 16px; display: grid; gap: 10px; max-width: 66ch; }
+  .steps li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; }
+  .steps li::before {
+    counter-increment: s; content: counter(s);
+    font-family: var(--mono); font-size: 13px; color: var(--accent-ink);
+    border: 1px solid var(--line-strong); border-radius: 999px; width: 24px; height: 24px;
+    display: grid; place-items: center; margin-top: 4px;
+  }
+  details { border-top: 1px solid var(--line); }
+  details:last-of-type { border-bottom: 1px solid var(--line); }
+  summary { cursor: pointer; padding: 12px 0; font-weight: 500; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "開く"; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  details[open] summary::after { content: "閉じる"; }
+  details > div { padding: 0 0 18px; font-size: 15px; }
+  details > div p + p { margin-top: 10px; }
+
+  footer { padding-top: 32px; font-size: 13px; color: var(--muted); max-width: 66ch; }
+</style>
+
+<div class="page">
+  <header class="intro">
+    <p class="eyebrow">Vibe coding workflow</p>
+    <h1>要件からIssueへ。AIに作らせる前に、作るものを決める段取り</h1>
+    <p class="lede">
+      AIに「こういうアプリ作って」と頼むと、最初は驚くほど速く動くものが出てきます。ところが機能を足すたびに前の動きが壊れ、何が完成で何が未完成なのか自分でも分からなくなる。この段取りは、その状態を避けるために、作るものを先に文章で固め、小さなタスクに切ってGitHub Issueで管理し、1本ずつAIに渡していく流れです。
+    </p>
+    <dl class="who">
+      <dt>読み手</dt><dd>コードは書かないがAIでアプリを作っている人。GitHubのアカウントは持っている、または作れる。</dd>
+      <dt>使うもの</dt><dd>会話できるAI（Claude、ChatGPT、Cursor など何でも）と、GitHub。</dd>
+      <dt>題材</dt><dd>本文の例はすべて、架空の「オフ会の出欠管理アプリ」で通します。</dd>
+    </dl>
+  </header>
+
+  <nav class="toc" aria-label="目次">
+    <p class="eyebrow">目次</p>
+    <ol>
+      <li><a href="#flow">全体の流れ</a></li>
+      <li><a href="#why">なぜこの順番か</a></li>
+      <li class="stage"><a href="#s1"><b>1</b>要件定義</a></li>
+      <li class="stage"><a href="#s2"><b>2</b>仕様書</a></li>
+      <li class="stage"><a href="#s3"><b>3</b>タスク分解</a></li>
+      <li class="stage"><a href="#s4"><b>4</b>Issue登録</a></li>
+      <li class="stage"><a href="#s5"><b>5</b>実行</a></li>
+      <li><a href="#claude-code">Claude Codeで回す場合</a></li>
+      <li><a href="#next">次の一歩</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <section class="block" id="flow">
+      <h2>全体の流れ</h2>
+      <p>
+        5段あります。各段は「前の段の成果物を受け取り、次の段の成果物を作る」だけの単純な受け渡しです。本題は最初の4段で、5段目の実行はここで作ったIssueを1本ずつ消化する作業になります。
+      </p>
+      <figure>
+        <div class="fig-scroll">
+        <svg viewBox="0 0 1000 250" role="img" aria-label="5段の流れ。頭の中の構想から要件定義、仕様書、タスク分解、Issue登録へと成果物が受け渡され、最後の実行ではIssueを1本ずつ処理する。最初の4段が本題。" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="currentColor"></path>
+            </marker>
+          </defs>
+          <g fill="none" stroke="currentColor" stroke-width="1.4" font-family="Noto Sans JP, Hiragino Sans, sans-serif" font-size="13">
+            <!-- stage boxes -->
+            <rect x="20" y="70" width="160" height="60" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"></rect>
+            <rect x="220" y="70" width="160" height="60" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"></rect>
+            <rect x="420" y="70" width="160" height="60" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"></rect>
+            <rect x="620" y="70" width="160" height="60" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"></rect>
+            <rect x="820" y="70" width="160" height="60" rx="6" fill="var(--surface)" stroke="currentColor" stroke-dasharray="4 3"></rect>
+            <!-- stage numbers + names -->
+            <g fill="currentColor" stroke="none" text-anchor="middle">
+              <text x="100" y="94" font-size="11" fill="var(--accent)">STAGE 1</text>
+              <text x="100" y="116" font-size="15" font-weight="700">要件定義</text>
+              <text x="300" y="94" font-size="11" fill="var(--accent)">STAGE 2</text>
+              <text x="300" y="116" font-size="15" font-weight="700">仕様書</text>
+              <text x="500" y="94" font-size="11" fill="var(--accent)">STAGE 3</text>
+              <text x="500" y="116" font-size="15" font-weight="700">タスク分解</text>
+              <text x="700" y="94" font-size="11" fill="var(--accent)">STAGE 4</text>
+              <text x="700" y="116" font-size="15" font-weight="700">Issue登録</text>
+              <text x="900" y="94" font-size="11">STAGE 5</text>
+              <text x="900" y="116" font-size="15" font-weight="700">実行</text>
+            </g>
+            <!-- arrows between boxes, labeled with the artifact handed over -->
+            <line x1="180" y1="100" x2="218" y2="100" marker-end="url(#arrow)"></line>
+            <line x1="380" y1="100" x2="418" y2="100" marker-end="url(#arrow)"></line>
+            <line x1="580" y1="100" x2="618" y2="100" marker-end="url(#arrow)"></line>
+            <line x1="780" y1="100" x2="818" y2="100" marker-end="url(#arrow)"></line>
+            <!-- artifacts below: what each stage produces -->
+            <g stroke="currentColor" stroke-width="1.2">
+              <line x1="100" y1="130" x2="100" y2="156"></line>
+              <line x1="300" y1="130" x2="300" y2="156"></line>
+              <line x1="500" y1="130" x2="500" y2="156"></line>
+              <line x1="700" y1="130" x2="700" y2="156"></line>
+              <line x1="900" y1="130" x2="900" y2="156"></line>
+            </g>
+            <g fill="var(--code-bg)" stroke="currentColor" stroke-width="1">
+              <path d="M40,158 h112 l8,8 v36 h-120 z"></path>
+              <path d="M240,158 h112 l8,8 v36 h-120 z"></path>
+              <path d="M440,158 h112 l8,8 v36 h-120 z"></path>
+              <path d="M640,158 h112 l8,8 v36 h-120 z"></path>
+              <path d="M840,158 h112 l8,8 v36 h-120 z"></path>
+            </g>
+            <g fill="currentColor" stroke="none" text-anchor="middle" font-size="12">
+              <text x="100" y="185">要件定義書（1枚）</text>
+              <text x="300" y="185">仕様書</text>
+              <text x="500" y="185">タスク一覧（順番つき）</text>
+              <text x="700" y="185">子Issue #2 〜 #6</text>
+              <text x="900" y="185">動くアプリ + PR</text>
+            </g>
+            <!-- input from the left -->
+            <text x="20" y="48" fill="currentColor" stroke="none" font-size="12">入力: 頭の中の構想</text>
+            <!-- loop on stage 5 -->
+            <path d="M960,70 C960,40 900,40 870,52" marker-end="url(#arrow)"></path>
+            <text x="915" y="36" fill="currentColor" stroke="none" font-size="11" text-anchor="middle">Issueを1本ずつ</text>
+            <!-- bracket under stages 1-4 -->
+            <path d="M20,222 v8 h760 v-8" stroke="var(--accent)" stroke-width="1.6"></path>
+            <text x="400" y="246" fill="var(--accent)" stroke="none" font-size="12" text-anchor="middle" font-weight="700">この4段が本題。ここで決めたことが、後の実行の質を決める</text>
+          </g>
+        </svg>
+        </div>
+        <figcaption>矢印の上を流れているのは、各段が作る成果物そのものです。段を飛ばすと、次の段に渡すものが無いまま進むことになります。</figcaption>
+      </figure>
+    </section>
+
+    <section class="block" id="why">
+      <h2>なぜこの順番か</h2>
+      <p>理由は3つに絞れます。</p>
+      <ul>
+        <li><b>作りたいものは、言葉にするまで自分でも決まっていない。</b>AIに丸投げしてぶれるのは、AIの問題ではなく、依頼側の要件が固まっていないからです。要件定義と仕様書は、AIのためというより自分のために書きます。</li>
+        <li><b>仕様が先にあると、AIの出力が安定する。</b>会話のたびに前提を言い直す代わりに、仕様書を貼るだけで同じ前提から始められます。</li>
+        <li><b>小さく切ると、確認できる。</b>「アプリ全部」は動作確認のしようがありませんが、「日程候補に○×で答えられる」なら5分で確認できます。Issueはその確認単位を記録する場所です。</li>
+      </ul>
+      <p>
+        以下、5段それぞれを同じ型で説明します。目的、入力と出力、AIに渡すプロンプト、成果物のテンプレート、オフ会アプリでの例、完了チェック、よくある失敗の7項目です。プロンプトとテンプレートはそのままコピーして使えます。
+      </p>
+    </section>
+
+    <!-- ========== STAGE 1 ========== -->
+    <section class="stage" id="s1">
+      <div class="stage-head">
+        <div class="stage-num">1</div>
+        <div>
+          <h2>要件定義</h2>
+          <p class="sub">誰が、何に困っていて、できると何が嬉しいかを1枚にする</p>
+          <p class="weight"><span class="main">本題</span></p>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>目的</h3>
+        <div>
+          <p>機能の一覧を書く段階ではありません。「困りごと」と「嬉しさ」を言葉にする段階です。ここが曖昧だと、後のすべての段が曖昧なまま進みます。</p>
+          <p>コツは、AIに書かせるのではなく、AIに<b>聞かせる</b>ことです。自分が答えているうちに要件が固まります。</p>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>入力と出力</h3>
+        <div>
+          <dl class="io">
+            <dt>入力</dt><dd>頭の中の構想。まとまっていなくて構いません。</dd>
+            <dt>出力</dt><dd>要件定義書。A4で1枚に収まる長さ。</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>プロンプト</h3>
+        <div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="kind">AIに渡す</span><button class="copy" type="button">コピー</button></div>
+            <pre>あなたは、これから作るアプリの要件を引き出すインタビュアーです。
+私はコードを書かない人間です。技術用語を使わず、私に質問を1つずつしてください。
+
+作りたいもの: <span class="var">{一言で。例: オフ会の出欠を管理するアプリ}</span>
+
+次のことが分かるまで質問を続けてください。
+- 誰が使うのか（主催者と参加者など、立場ごとに）
+- 今どうやっていて、何に困っているのか
+- できるようになると、何が嬉しいのか
+- 最低限これができれば十分、と言える範囲
+- やらなくていいこと
+
+分かったと判断したら、下のテンプレートの形で要件定義書を書いてください。
+私が答えていない項目は「未定」と書き、勝手に補わないでください。
+
+テンプレート:
+# 要件定義書
+## 目的（一文）
+## 使う人
+## 今の困りごと
+## できるようになること（必須）
+## できるようになること（あれば嬉しい）
+## やらないこと
+## 完成の目安</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>例</h3>
+        <div>
+          <div class="example">
+            <div class="example-head"><span class="title">要件定義書（オフ会の出欠管理アプリ）</span></div>
+            <div class="example-body">
+              <h4>目的（一文）</h4>
+              <p>趣味の集まりのオフ会について、日程決めと出欠の把握を、主催者がチャットを追いかけずに済ませられるようにする。</p>
+              <h4>使う人</h4>
+              <ul>
+                <li>主催者（月1回、10〜20人規模のオフ会を開く。1人）</li>
+                <li>参加者（常連と初参加が混ざる。スマホから使う）</li>
+              </ul>
+              <h4>今の困りごと</h4>
+              <ul>
+                <li>グループチャットで日程を聞くと、返事が流れて誰が来るのか数えられない</li>
+                <li>会場と会費を毎回聞かれる</li>
+                <li>前日に「明日でしたっけ」と聞かれる</li>
+              </ul>
+              <h4>できるようになること（必須）</h4>
+              <ul>
+                <li>主催者がオフ会を作り、日程の候補を複数出せる</li>
+                <li>参加者が候補ごとに ○ △ × で答えられる</li>
+                <li>主催者が、候補ごとの ○ の人数と名前を一覧で見られる</li>
+                <li>会場と会費をオフ会のページに書いておける</li>
+              </ul>
+              <h4>できるようになること（あれば嬉しい）</h4>
+              <ul>
+                <li>前日にリマインドのメールが届く</li>
+              </ul>
+              <h4>やらないこと</h4>
+              <ul>
+                <li>会費の集金（現地で現金）</li>
+                <li>写真の共有（既存のチャットで足りる）</li>
+                <li>参加者どうしのチャット</li>
+              </ul>
+              <h4>完成の目安</h4>
+              <p>次回のオフ会の日程決めを、グループチャットを使わずこのアプリだけで終えられる。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>完了チェック</h3>
+        <div>
+          <ul class="done">
+            <li>「目的」が一文で書けている</li>
+            <li>使う人が立場ごとに分かれている（主催者と参加者、など）</li>
+            <li>「やらないこと」が3つ以上ある</li>
+            <li>「完成の目安」が、実際にやってみれば確認できる形になっている</li>
+            <li>技術の話（データベース、フレームワークなど）が一切出てこない</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>よくある失敗</h3>
+        <div class="pitfalls">
+          <div class="pitfall"><b>機能の羅列から始める。</b>「ログイン、投稿、いいね、通知」と並べても、誰が何に困っているかが無いので、どれが必須か判断できません。</div>
+          <div class="pitfall"><b>「やらないこと」が空。</b>境界が無いと、AIは善意で機能を足し続けます。やらないことを決めるのは、要件定義の半分です。</div>
+          <div class="pitfall"><b>AIに全部書かせる。</b>質問なしで書かれた要件定義書は、AIが平均的なアプリを想像して埋めたものです。自分の困りごとは自分しか知りません。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== STAGE 2 ========== -->
+    <section class="stage" id="s2">
+      <div class="stage-head">
+        <div class="stage-num">2</div>
+        <div>
+          <h2>仕様書</h2>
+          <p class="sub">要件を「画面・データ・ルール」に翻訳する</p>
+          <p class="weight"><span class="main">本題</span></p>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>目的</h3>
+        <div>
+          <p>要件定義書は「何のために」を書いたものです。仕様書はそれを「具体的に何があるか」に翻訳します。画面が何枚あり、それぞれで何ができ、どんなデータを覚えておき、誰に何が許されるか。</p>
+          <p>ここは技術の一歩手前です。「データベースに何のテーブルを作るか」ではなく、「オフ会には名前と日程候補と会場がある」という日本語の粒度で書きます。</p>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>入力と出力</h3>
+        <div>
+          <dl class="io">
+            <dt>入力</dt><dd>段1の要件定義書。</dd>
+            <dt>出力</dt><dd>仕様書。画面一覧、データ、ルール、やらないこと、用語の5節。</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>プロンプト</h3>
+        <div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="kind">AIに渡す</span><button class="copy" type="button">コピー</button></div>
+            <pre>下の要件定義書をもとに、仕様書を書いてください。私はコードを書かない人間です。
+
+守ってほしいこと:
+- 技術の選択（言語、データベース、ライブラリ）は書かない
+- 要件定義書に無い機能を足さない。足したくなったら「提案」として末尾に分けて書く
+- 判断に迷う点があれば、書き始める前に私に質問する
+- 「やらないこと」は要件定義書から必ず引き継ぐ
+
+仕様書の形:
+# 仕様書
+## 画面一覧（画面の名前と、そこで誰が何をできるか）
+## 扱うデータ（覚えておく情報を、項目ごとに日本語で）
+## ルール（誰が何をできるか。できないことも書く）
+## やらないこと
+## 用語（この仕様書で使う言葉の定義）
+## 提案（要件に無いが、あると良さそうなこと。採用するかは私が決める）
+
+要件定義書:
+<span class="var">{段1で作った要件定義書をここに貼る}</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>例</h3>
+        <div>
+          <div class="example">
+            <div class="example-head"><span class="title">仕様書（抜粋）</span></div>
+            <div class="example-body">
+              <h4>画面一覧</h4>
+              <div class="table-scroll">
+              <table>
+                <tr><th>画面</th><th>誰が</th><th>できること</th></tr>
+                <tr><td>ログイン</td><td>全員</td><td>メールアドレスでログインする</td></tr>
+                <tr><td>オフ会一覧</td><td>全員</td><td>自分が関わるオフ会を新しい順に見る。主催者は「新しく作る」に進める</td></tr>
+                <tr><td>オフ会作成</td><td>主催者</td><td>名前、説明、会場、会費、日程候補（複数）を入れて作る</td></tr>
+                <tr><td>オフ会詳細</td><td>全員</td><td>会場と会費を見る。参加者は候補ごとに ○ △ × を選ぶ。主催者は候補ごとの人数と名前を見る</td></tr>
+              </table>
+              </div>
+              <h4>扱うデータ</h4>
+              <ul>
+                <li>利用者: 表示名、メールアドレス</li>
+                <li>オフ会: 名前、説明、会場、会費、主催者、日程候補（日付と時刻の組を複数）</li>
+                <li>出欠回答: どの利用者が、どの日程候補に、○ △ × のどれで答えたか。1人1候補につき1つ。あとから変えられる</li>
+              </ul>
+              <h4>ルール</h4>
+              <ul>
+                <li>オフ会を作れるのはログインしている人。作った人が主催者になる</li>
+                <li>オフ会を編集・削除できるのは主催者だけ</li>
+                <li>出欠に答えられるのはログインしている人。他人の回答は変えられない</li>
+              </ul>
+              <h4>やらないこと</h4>
+              <ul>
+                <li>会費の集金、写真共有、参加者どうしのチャット（要件定義書から引き継ぎ）</li>
+                <li>オフ会の公開・非公開の区別（初回はリンクを知っている人だけが見る前提）</li>
+              </ul>
+              <h4>提案</h4>
+              <ul>
+                <li>主催者が「この日に決定」を押すと、詳細画面の先頭に決定日が出る。採用するかは要判断</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>完了チェック</h3>
+        <div>
+          <ul class="done">
+            <li>画面一覧の各行に「誰が」がある</li>
+            <li>要件定義書の「必須」がすべて、どこかの画面に対応している</li>
+            <li>「ルール」に、できないことが書いてある（他人の回答は変えられない、など）</li>
+            <li>「やらないこと」が要件定義書と一致している</li>
+            <li>AIが勝手に足した機能が「提案」に隔離され、本文に混ざっていない</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>よくある失敗</h3>
+        <div class="pitfalls">
+          <div class="pitfall"><b>仕様書が長くなりすぎる。</b>10画面を超えたら、要件定義書の「必須」が多すぎます。段1に戻って「あれば嬉しい」に降ろしてください。</div>
+          <div class="pitfall"><b>実装の話が混ざる。</b>「Supabaseで認証」「Reactで作る」は仕様ではなく手段です。ここで固めると、AIの選択肢を早く狭めすぎます。</div>
+          <div class="pitfall"><b>提案を全部採用する。</b>AIの提案は、よくある機能を並べているだけのことが多いです。要件定義書の「困りごと」に効くものだけ採用します。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== STAGE 3 ========== -->
+    <section class="stage" id="s3">
+      <div class="stage-head">
+        <div class="stage-num">3</div>
+        <div>
+          <h2>タスク分解</h2>
+          <p class="sub">1回のAI作業で完成して、動作確認できる単位に切る</p>
+          <p class="weight"><span class="main">本題</span></p>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>目的</h3>
+        <div>
+          <p>仕様書をそのままAIに渡して「全部作って」と言うと、途中で壊れたときに戻る場所がありません。仕様書を、1つずつ完成させて確認できるタスクに切り、順番を決めます。</p>
+          <p>切り方の基準は一つです。<b>そのタスクだけが終わった状態で、自分で動かして「できた」と言えるか。</b>言えないなら、大きすぎるか、依存する別のタスクが先です。</p>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>入力と出力</h3>
+        <div>
+          <dl class="io">
+            <dt>入力</dt><dd>段2の仕様書。</dd>
+            <dt>出力</dt><dd>タスク一覧。各タスクに、名前、完了条件、順番、依存があるもの。</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>プロンプト</h3>
+        <div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="kind">AIに渡す</span><button class="copy" type="button">コピー</button></div>
+            <pre>下の仕様書を、開発タスクに分解してください。
+
+タスクの条件:
+- 1つのタスクだけが終わった状態で、私がアプリを触って「できた」と確認できること
+- 1つのタスクは、AIとの1回の作業（数時間以内）で終わる大きさ
+- 最初のタスクは「ログインして、空っぽの一覧画面が出る」のような、いちばん薄い一本道にする
+- 各タスクに「完了条件」を書く。私が触って確認できる文にする（「〜が表示される」「〜を押すと〜になる」）
+- 順番を付け、前のタスクに依存する場合はそれを書く
+- 仕様書の「やらないこと」はタスクにしない
+
+出力の形（タスクごと）:
+### タスク N: {名前}
+- 依存: タスク {番号}（無ければ「なし」）
+- 内容: {何を作るか、2〜3行}
+- 完了条件:
+  - [ ] {私が確認できる文}
+  - [ ] ...
+
+最後に、全体で何本になったかと、順番の理由を短く書いてください。
+
+仕様書:
+<span class="var">{段2で作った仕様書をここに貼る}</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>切り方の決まり</h3>
+        <div class="rules">
+          <div class="rule">
+            <b>1タスク = 1つの完成した変更</b>
+            <p>1つのタスクは、後で1つのPull Request（変更のまとまり）になります。「ログイン機能一式」のような大きさは、途中で止まると全部が中途半端になるので、「ログインできる」「ログアウトできる」まで分けます。</p>
+          </div>
+          <div class="rule">
+            <b>親タスクは束ねるだけ。中身を持たない</b>
+            <p>「オフ会アプリ v1」のような親タスクを1つ作り、子タスクを列挙して進捗を見る場所にします。親自体には作業内容を書きません。段4で、親が勝手に閉じないための書き方を説明します。</p>
+          </div>
+          <div class="rule">
+            <b>分けるなら、着手する前に全部分ける</b>
+            <p>作業を始めてから「やっぱり分けよう」とすると、どこまでが何だったか分からなくなります。段階分けは、この段で終わらせます。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>例</h3>
+        <div>
+          <div class="example">
+            <div class="example-head"><span class="title">タスク一覧（オフ会の出欠管理アプリ）</span></div>
+            <div class="example-body">
+              <div class="table-scroll">
+              <table>
+                <tr><th>順</th><th>タスク</th><th>依存</th><th>完了条件（抜粋）</th></tr>
+                <tr><td>1</td><td>ログインと空のオフ会一覧</td><td>なし</td><td>メールでログインすると、空の一覧画面が出る。ログアウトできる</td></tr>
+                <tr><td>2</td><td>オフ会の作成と詳細表示</td><td>1</td><td>名前・会場・会費・日程候補を入れて作ると、一覧と詳細に出る。主催者だけが編集できる</td></tr>
+                <tr><td>3</td><td>日程候補への出欠回答</td><td>2</td><td>参加者が候補ごとに ○ △ × を選べる。選び直せる。他人の回答は変えられない</td></tr>
+                <tr><td>4</td><td>主催者向けの集計表示</td><td>3</td><td>候補ごとに ○ の人数と名前が一覧で見える</td></tr>
+                <tr><td>5</td><td>前日リマインドのメール</td><td>3</td><td>各日程候補の前日に、その候補に ○ と答えた参加者へメールが届く</td></tr>
+              </table>
+              </div>
+              <p style="margin-top:12px">5本。1で一本道を通し、2から4は仕様書の「必須」を上から順に。5は「あれば嬉しい」なので最後に置く。回答（3）には依存するが集計（4）には依存しないため、4と入れ替えても構わない。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>完了チェック</h3>
+        <div>
+          <ul class="done">
+            <li>タスク1が「一本道」になっている（ログインして何か1画面が出る、程度）</li>
+            <li>すべてのタスクに、自分が触って確認できる完了条件がある</li>
+            <li>依存関係が一方向で、順に進めれば詰まらない</li>
+            <li>要件定義書の「必須」がすべて、どれかのタスクに含まれている</li>
+            <li>本数が3〜10本に収まっている（超えるなら仕様が大きすぎる）</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>よくある失敗</h3>
+        <div class="pitfalls">
+          <div class="pitfall"><b>大きすぎるタスク。</b>「オフ会機能」は1本ではありません。完了条件が3行を超えたら分ける合図です。</div>
+          <div class="pitfall"><b>順番を考えない。</b>「出欠回答」を先に作ると、答える相手のオフ会が無くて確認できません。依存を書けば順番は自然に決まります。</div>
+          <div class="pitfall"><b>完了条件が「実装する」になっている。</b>「出欠機能を実装する」は確認できません。「○ を押すと ○ が保存され、再読み込みしても残っている」が完了条件です。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== STAGE 4 ========== -->
+    <section class="stage" id="s4">
+      <div class="stage-head">
+        <div class="stage-num">4</div>
+        <div>
+          <h2>Issue登録</h2>
+          <p class="sub">タスクをGitHub Issueに書き、進捗と記録の置き場にする</p>
+          <p class="weight"><span class="main">本題</span></p>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>目的</h3>
+        <div>
+          <p>段3で作ったタスク一覧を、GitHubのIssueとして1本ずつ登録します。チャットのログやメモ帳ではなくIssueにする理由は4つあります。</p>
+          <ul>
+            <li>番号が付く。「#3をやって」とAIにも人にも一言で渡せる</li>
+            <li>完了条件がチェックリストとして残り、終わったかどうかを後から見返せる</li>
+            <li>変更（Pull Request）と自動で結びつき、「この機能はどの変更で入ったか」を辿れる</li>
+            <li>閉じたIssueが、そのまま開発の履歴になる</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>入力と出力</h3>
+        <div>
+          <dl class="io">
+            <dt>入力</dt><dd>段3のタスク一覧。</dd>
+            <dt>出力</dt><dd>GitHub Issue。子Issueがタスクの本数分と、それを束ねる親Issueが1本。</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>Issueの型</h3>
+        <div>
+          <p>子Issueの本文は、いつも同じ4節にします。この型は、著者が実際に運用しているプロジェクトのIssueの形をそのまま一般化したものです。</p>
+          <div class="prompt" style="margin-top:12px">
+            <div class="prompt-head"><span class="kind">子Issueのテンプレート</span><button class="copy" type="button">コピー</button></div>
+            <pre>## 概要
+<span class="var">{何を作るか、1〜3文}</span>
+
+## 背景と目的
+<span class="var">{要件定義書のどの困りごとに効くか。仕様書のどの画面・ルールに対応するか}</span>
+
+## 対応チェックリスト
+- [ ] <span class="var">{作業の区切り1}</span>
+- [ ] <span class="var">{作業の区切り2}</span>
+
+## 完了条件（Acceptance Criteria）
+- [ ] <span class="var">{自分が触って確認できる文1}</span>
+- [ ] <span class="var">{自分が触って確認できる文2}</span>
+
+Refs #<span class="var">{親Issueの番号}</span></pre>
+          </div>
+          <p style="margin-top:14px">タイトルには種類を接頭辞で付けます。新機能は <code>feat:</code>、不具合の修正は <code>fix:</code>、文書は <code>docs:</code>。一覧で見たときに種類が揃って読めます。</p>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>親と子の関係</h3>
+        <div>
+          <figure style="margin-top:0">
+            <div class="fig-scroll">
+            <svg viewBox="0 0 760 250" role="img" aria-label="親Issueは子Issueを Refs で束ねるだけ。各子Issueは自分のPull Requestから Closes で参照され、マージされると自動で閉じる。親は自動では閉じない。" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" fill="currentColor"></path>
+                </marker>
+              </defs>
+              <g fill="none" stroke="currentColor" stroke-width="1.3" font-family="Noto Sans JP, Hiragino Sans, sans-serif" font-size="12">
+                <!-- parent -->
+                <rect x="16" y="96" width="150" height="58" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"></rect>
+                <g fill="currentColor" stroke="none" text-anchor="middle">
+                  <text x="91" y="119" font-weight="700" font-size="13">親 Issue #1</text>
+                  <text x="91" y="139" font-size="11">オフ会アプリ v1</text>
+                </g>
+                <!-- children -->
+                <g fill="var(--surface)" stroke="currentColor">
+                  <rect x="300" y="14" width="170" height="34" rx="5"></rect>
+                  <rect x="300" y="60" width="170" height="34" rx="5"></rect>
+                  <rect x="300" y="106" width="170" height="34" rx="5"></rect>
+                  <rect x="300" y="152" width="170" height="34" rx="5"></rect>
+                  <rect x="300" y="198" width="170" height="34" rx="5"></rect>
+                </g>
+                <g fill="currentColor" stroke="none" font-size="12">
+                  <text x="310" y="36">#2 ログインと空の一覧</text>
+                  <text x="310" y="82">#3 オフ会の作成と詳細</text>
+                  <text x="310" y="128">#4 出欠回答</text>
+                  <text x="310" y="174">#5 主催者向け集計</text>
+                  <text x="310" y="220">#6 前日リマインド</text>
+                </g>
+                <!-- PRs -->
+                <g fill="var(--code-bg)" stroke="currentColor">
+                  <rect x="600" y="14" width="140" height="34" rx="5"></rect>
+                  <rect x="600" y="60" width="140" height="34" rx="5"></rect>
+                  <rect x="600" y="106" width="140" height="34" rx="5"></rect>
+                  <rect x="600" y="152" width="140" height="34" rx="5"></rect>
+                  <rect x="600" y="198" width="140" height="34" rx="5"></rect>
+                </g>
+                <g fill="currentColor" stroke="none" font-size="12" text-anchor="middle">
+                  <text x="670" y="36">PR（変更）</text>
+                  <text x="670" y="82">PR（変更）</text>
+                  <text x="670" y="128">PR（変更）</text>
+                  <text x="670" y="174">PR（変更）</text>
+                  <text x="670" y="220">PR（変更）</text>
+                </g>
+                <!-- Refs: parent -> children (dashed) -->
+                <g stroke-dasharray="5 4">
+                  <path d="M166,125 C230,125 230,31 298,31" marker-end="url(#arrow2)"></path>
+                  <path d="M166,125 C230,125 230,77 298,77" marker-end="url(#arrow2)"></path>
+                  <line x1="166" y1="125" x2="298" y2="123" marker-end="url(#arrow2)"></line>
+                  <path d="M166,125 C230,125 230,169 298,169" marker-end="url(#arrow2)"></path>
+                  <path d="M166,125 C230,125 230,215 298,215" marker-end="url(#arrow2)"></path>
+                </g>
+                <!-- Closes: PR -> child (solid, accent) -->
+                <g stroke="var(--accent)" stroke-width="1.8">
+                  <line x1="598" y1="31" x2="474" y2="31" marker-end="url(#arrow2)"></line>
+                  <line x1="598" y1="77" x2="474" y2="77" marker-end="url(#arrow2)"></line>
+                  <line x1="598" y1="123" x2="474" y2="123" marker-end="url(#arrow2)"></line>
+                  <line x1="598" y1="169" x2="474" y2="169" marker-end="url(#arrow2)"></line>
+                  <line x1="598" y1="215" x2="474" y2="215" marker-end="url(#arrow2)"></line>
+                </g>
+                <!-- legend -->
+                <g font-size="11" fill="currentColor" stroke="none">
+                  <line x1="16" y1="200" x2="52" y2="200" stroke="currentColor" stroke-dasharray="5 4"></line>
+                  <text x="60" y="204">Refs: 束ねるだけ。閉じない</text>
+                  <line x1="16" y1="224" x2="52" y2="224" stroke="var(--accent)" stroke-width="1.8"></line>
+                  <text x="60" y="228">Closes: マージで自動的に閉じる</text>
+                </g>
+              </g>
+            </svg>
+            </div>
+            <figcaption>子IssueからPRへは <code>Closes #番号</code>、子から親へは <code>Refs #番号</code>。ここを逆にすると、最初の子が終わった時点で親が自動で閉じてしまい、進捗を見る場所が消えます。</figcaption>
+          </figure>
+          <div class="prompt" style="margin-top:16px">
+            <div class="prompt-head"><span class="kind">親Issueのテンプレート</span><button class="copy" type="button">コピー</button></div>
+            <pre>## 概要
+<span class="var">{何を作るかを1〜2文}</span>。本Issueは作業を持たず、子Issueを束ねる。
+子Issueがすべて閉じたら、手動でこのIssueを閉じる。
+子IssueからこのIssueへは Closes ではなく Refs で参照すること（自動クローズ防止）。
+
+## 子Issue
+- [ ] #<span class="var">{番号}</span> <span class="var">{タスク1の名前}</span>
+- [ ] #<span class="var">{番号}</span> <span class="var">{タスク2の名前}</span>
+- [ ] #<span class="var">{番号}</span> <span class="var">{タスク3の名前}</span>
+
+## 参照
+- 要件定義書: <span class="var">{置き場所へのリンク}</span>
+- 仕様書: <span class="var">{置き場所へのリンク}</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>プロンプト</h3>
+        <div>
+          <p>Issueは自分でGitHubの画面から作っても構いませんが、本文をタスク一覧から起こす作業はAIに任せられます。</p>
+          <div class="prompt" style="margin-top:12px">
+            <div class="prompt-head"><span class="kind">AIに渡す</span><button class="copy" type="button">コピー</button></div>
+            <pre>下のタスク一覧を、GitHub Issue の本文に書き起こしてください。
+
+- 子Issueは、タスク1本につき1つ。下のテンプレートの4節で書く
+- タイトルは「feat: {何ができるようになるか}」の形
+- 「完了条件」は、タスク一覧の完了条件をそのまま使う。私が触って確認できる文になっていなければ直す
+- 親Issueを1つ作り、子Issueを並べる。親の本文には「子から親へは Refs で参照」と明記する
+- 私が GitHub の画面に貼り付けられるように、Issueごとに区切って出す
+
+子Issueのテンプレート:
+## 概要
+## 背景と目的
+## 対応チェックリスト
+## 完了条件（Acceptance Criteria）
+Refs #{親の番号}
+
+タスク一覧:
+<span class="var">{段3で作ったタスク一覧をここに貼る}</span></pre>
+          </div>
+          <p style="margin-top:14px">GitHubのコマンドラインツール <code>gh</code> が入っている環境なら、「上の本文で <code>gh issue create</code> を実行して」と頼めば登録まで任せられます。親を先に作ると番号が確定するので、子の <code>Refs</code> に入れられます。</p>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>例</h3>
+        <div>
+          <div class="example">
+            <div class="example-head">
+              <span class="label open">Open</span>
+              <span class="title">feat: 日程候補への出欠回答</span>
+              <span class="meta">#4</span>
+            </div>
+            <div class="example-body">
+              <h4>概要</h4>
+              <p>参加者がオフ会の各日程候補に ○ △ × で答えられるようにする。答えは選び直せる。</p>
+              <h4>背景と目的</h4>
+              <p>要件定義書の困りごと「返事が流れて誰が来るのか数えられない」に対する中核機能。仕様書「オフ会詳細」画面と、データ「出欠回答」、ルール「他人の回答は変えられない」に対応する。</p>
+              <h4>対応チェックリスト</h4>
+              <ul class="check">
+                <li>出欠回答のデータを保存できるようにする</li>
+                <li>オフ会詳細画面に、候補ごとの ○ △ × の選択を付ける</li>
+                <li>自分の回答だけ変更できるようにする</li>
+              </ul>
+              <h4>完了条件（Acceptance Criteria）</h4>
+              <ul class="check">
+                <li>参加者としてログインし、詳細画面で候補ごとに ○ △ × のどれかを選べる</li>
+                <li>選び直すと、最後に選んだものだけが残る。再読み込みしても残っている</li>
+                <li>別の参加者でログインしても、前の人の回答を変更できない</li>
+              </ul>
+              <p style="margin-top:12px" class="meta">Refs #1</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>完了チェック</h3>
+        <div>
+          <ul class="done">
+            <li>子Issueがタスクの本数分あり、それぞれに完了条件がある</li>
+            <li>親Issueに子が全部並び、「Refs で参照」と書いてある</li>
+            <li>子Issueの本文に <code>Refs #親</code> があり、<code>Closes #親</code> になっていない</li>
+            <li>タイトルに <code>feat:</code> などの接頭辞がある</li>
+            <li>要件定義書と仕様書の置き場所が、親Issueからリンクされている</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>よくある失敗</h3>
+        <div class="pitfalls">
+          <div class="pitfall"><b>完了条件が無い。</b>Issueに「出欠機能」とだけ書くと、AIは自分の解釈で完成を宣言します。完了条件はAIへの依頼文であり、自分が確認するときのチェック表でもあります。</div>
+          <div class="pitfall"><b>1つのIssueに複数のタスク。</b>「作成と回答と集計」を1本にすると、途中で止まったときに何が終わっているのか分からなくなります。段3の切り方に戻ります。</div>
+          <div class="pitfall"><b>親を Closes で参照する。</b>最初の子がマージされた瞬間に親が閉じます。閉じた親は一覧から消え、残りの進捗を見失います。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== STAGE 5 ========== -->
+    <section class="stage thin" id="s5">
+      <div class="stage-head">
+        <div class="stage-num">5</div>
+        <div>
+          <h2>実行</h2>
+          <p class="sub">Issueを1本ずつAIに渡し、完了条件を自分で確認して閉じる</p>
+          <p class="weight"><span>1本ずつ繰り返す</span></p>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>目的</h3>
+        <div>
+          <p>ここまでで、AIに渡す単位と、終わったかどうかの判定基準が全部揃っています。実行は、その単位を上から順に消化する作業です。段1〜4が丁寧なら、ここは単純になります。</p>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>手順</h3>
+        <div>
+          <ol class="steps" style="margin-top:0">
+            <li>次のIssueの番号を選ぶ。依存が終わっているものだけ。</li>
+            <li>AIにIssueの本文を渡して実装させる。会話の最初に仕様書も貼っておくと前提がぶれない。</li>
+            <li>AIが「できた」と言ったら、<b>別の新しい会話</b>で、変更内容を見せてレビューさせる。同じ会話の中のAIは自分の仕事を甘く採点する。</li>
+            <li>レビューで出た指摘を直させる。</li>
+            <li>自分でアプリを触って、Issueの完了条件を1つずつ確認する。満たしていなければ2に戻る。</li>
+            <li>変更をPull Requestにして、本文に <code>Closes #番号</code> を書き、マージする。Issueは自動で閉じる。</li>
+            <li>親Issueのチェックを入れて、次のIssueへ。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>プロンプト</h3>
+        <div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="kind">実装させる</span><button class="copy" type="button">コピー</button></div>
+            <pre>次のIssueを実装してください。仕様書に無いことは足さないでください。
+完了条件をすべて満たしたと自分で確認できたら、何をどう確認したかを書いてから「できた」と報告してください。
+
+仕様書:
+<span class="var">{段2の仕様書}</span>
+
+Issue #<span class="var">{番号}</span>:
+<span class="var">{Issueの本文をそのまま貼る}</span></pre>
+          </div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="kind">別の会話でレビューさせる</span><button class="copy" type="button">コピー</button></div>
+            <pre>あなたはこの変更を初めて見るレビュアーです。実装した人の説明は読まず、変更内容だけを見てください。
+
+確認してほしいこと:
+- Issue の完了条件が、本当に満たされるか。満たされない条件があれば、どの条件か
+- 仕様書に無い機能や変更が混ざっていないか
+- 明らかに壊れそうな箇所（保存されない、他人のデータが見える、など）
+
+指摘は「場所、何が問題か、どう直すか」の3点で、重要な順に並べてください。
+
+Issue #<span class="var">{番号}</span>:
+<span class="var">{Issueの本文}</span>
+
+変更内容:
+<span class="var">{差分、または変更したファイル}</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>完了チェック</h3>
+        <div>
+          <ul class="done">
+            <li>完了条件を、AIの報告ではなく自分の手で確認した</li>
+            <li>レビューを、実装したのとは別の会話で行った</li>
+            <li>PRの本文に <code>Closes #番号</code> があり、マージでIssueが閉じた</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>よくある失敗</h3>
+        <div class="pitfalls">
+          <div class="pitfall"><b>AIの「できました」を信じてマージする。</b>完了条件は自分で触って確認するためのものです。ここを省くと、段1〜4の意味が無くなります。</div>
+          <div class="pitfall"><b>レビューを同じ会話でやる。</b>実装したAIに「問題ないか」と聞くと、ほぼ「問題ありません」と返ってきます。会話を分けるだけで指摘の質が変わります。</div>
+          <div class="pitfall"><b>実行中に仕様を変える。</b>作りながら「やっぱりこうしたい」と思ったら、その場で足さず、新しいIssueにして親に追加します。今のIssueは今の完了条件で終わらせます。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== APPENDIX: Claude Code ========== -->
+    <section class="block" id="claude-code">
+      <h2>Claude Codeで回す場合</h2>
+      <p>
+        著者はこの流れを Claude Code で回しています。上の5段は Claude Code が無くても成立しますが、Claude Code には「決まった手順をスラッシュコマンドとして保存する」機能があり、段3〜5の繰り返し部分をかなり自動化できます。
+      </p>
+      <div class="cc-note">
+        <b>先に一つ注意。</b>下に出てくる <code>/issue-create</code> や <code>/issue-complete</code> は、著者が自分用に作ったコマンドで、Claude Code に最初から入っているものではありません。素の Claude Code では、上の各段のプロンプトをそのまま貼れば同じことができます。コマンドは、同じプロンプトを何度も貼るのが面倒になってから作れば十分です。
+      </div>
+
+      <div class="cmp table-scroll">
+        <table>
+          <tr><th>段</th><th>素の Claude Code でやること</th><th>著者が使っているコマンド／スキル</th><th>何が自動になるか</th></tr>
+          <tr><td>1 要件定義</td><td>段1のプロンプトを貼って対話する</td><td>なし（対話そのもの）</td><td>自動化しない。ここは人が答える段</td></tr>
+          <tr><td>2 仕様書</td><td>段2のプロンプトを貼る</td><td>superpowers プラグインの brainstorming スキル（著者の自作ではなく公開プラグイン）</td><td>質問を1つずつ出し、合意した設計を日付つきのファイルに保存する</td></tr>
+          <tr><td>3 タスク分解</td><td>段3のプロンプトを貼る</td><td>なし（段2の対話の続きで行う）</td><td>分けるべきかの判断を、設計の段階で必ず聞く決まりにしている</td></tr>
+          <tr><td>4 Issue登録</td><td>段4のプロンプトを貼り、<code>gh issue create</code> を頼む</td><td><code>/issue-create</code>（自作）</td><td>自由文から4節の本文・接頭辞つきタイトル・ラベルを組み立て、確認1回で登録する</td></tr>
+          <tr><td>5 実行</td><td>段5の2つのプロンプトを、会話を分けて貼る</td><td><code>/issue-complete 番号</code>（自作）</td><td>下の4段を一気に回し、最後にレポートを出す</td></tr>
+        </table>
+      </div>
+
+      <h3 style="margin-top:32px; font-size:18px"><code>/issue-complete</code> の中身（4段の要約）</h3>
+      <ol class="steps">
+        <li><b>設計。</b>Issueとプロジェクトの決まりを読み、実装計画をファイルに書く。ここは判断力の高いモデルに任せる。</li>
+        <li><b>実装。</b>計画に沿って、別の作業者（サブエージェント）がコードを書く。計画が良ければ、ここは速いモデルで足りる。</li>
+        <li><b>レビューと修正。</b>実装を知らない別のエージェントに差分だけを渡してレビューさせ、指摘を直す。指摘が出なくなるまで繰り返す。段5の手順3〜4を、機械的に何周も回す仕組み。</li>
+        <li><b>報告。</b>何を作り、何を指摘され、何を直したかをまとめる。人はこれと完了条件を見てマージを判断する。</li>
+      </ol>
+      <p style="margin-top:16px">
+        趣味のアプリなら、ここまでの仕組みは不要です。段5のプロンプト2本を会話を分けて使えば、同じ効果の大半が得られます。
+      </p>
+
+      <h3 style="margin-top:32px; font-size:18px">自作コマンドの作り方（さわりだけ）</h3>
+      <div style="margin-top:12px">
+        <details>
+          <summary>スラッシュコマンドはただの Markdown ファイル</summary>
+          <div>
+            <p>プロジェクトの <code>.claude/commands/</code> に <code>issue-create.md</code> のようなファイルを置くと、<code>/issue-create</code> と打てるようになります。中身は「この手順でやって」という指示文で、上の各段のプロンプトをそのまま入れれば最初のコマンドになります。</p>
+            <p>まずは段4のプロンプトを <code>.claude/commands/issue-create.md</code> に保存するところから始めると、効果が分かりやすいです。</p>
+          </div>
+        </details>
+        <details>
+          <summary>CLAUDE.md にプロジェクトの決まりを書く</summary>
+          <div>
+            <p>プロジェクト直下に <code>CLAUDE.md</code> というファイルを置くと、Claude Code は毎回それを読んでから作業します。「やらないこと」「Issueなしでコードを変えない」「タスクは1 Issue = 1 PR」のような決まりをここに書いておくと、会話のたびに言い直さずに済みます。</p>
+            <p>段1〜4で決めたことのうち、次の作業でも守ってほしいものを、少しずつここへ移していくのがおすすめです。</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="block" id="next">
+      <h2>次の一歩</h2>
+      <p>いきなり本命のアプリでやらず、まず小さな題材で1周してみてください。オフ会アプリなら、段1から段4までで1〜2時間、Issueは5本ほどです。</p>
+      <ul>
+        <li><b>1周したら、振り返りを3行書く。</b>どの段で迷ったか、どのIssueが大きすぎたか。次の題材で切り方が変わります。</li>
+        <li><b>守れた決まりを、常設のメモに移す。</b>「やらないことを先に決める」「完了条件は触って確認できる文」など、自分に効いたルールを、AIが毎回読む場所（Claude Code なら <code>CLAUDE.md</code>）に書きます。</li>
+        <li><b>要件定義書と仕様書は、リポジトリに置く。</b>チャットの中に置いたままだと、次の会話から見えません。<code>docs/</code> のようなフォルダに置き、親Issueからリンクします。</li>
+      </ul>
+    </section>
+
+    <footer>
+      本文の例はすべて架空の「オフ会の出欠管理アプリ」で、実在のサービスとは関係ありません。Issueの型と親子の決まりは、著者が実際に運用しているプロジェクトの形を一般化したものです。
+    </footer>
+  </main>
+</div>
+
+<script>
+  (function () {
+    var buttons = document.querySelectorAll('button.copy');
+    function fallbackCopy(text) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.top = '-1000px';
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      return ok;
+    }
+    function mark(btn, ok) {
+      var original = btn.textContent;
+      btn.textContent = ok ? 'コピーしました' : 'コピーできませんでした';
+      if (ok) btn.classList.add('done');
+      setTimeout(function () { btn.textContent = original; btn.classList.remove('done'); }, 1600);
+    }
+    Array.prototype.forEach.call(buttons, function (btn) {
+      btn.addEventListener('click', function () {
+        var pre = btn.closest('.prompt').querySelector('pre');
+        var text = pre.textContent;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () { mark(btn, true); }, function () { mark(btn, fallbackCopy(text)); });
+        } else {
+          mark(btn, fallbackCopy(text));
+        }
+      });
+    });
+  })();
+</script>
