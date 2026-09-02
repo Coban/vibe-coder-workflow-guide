@@ -311,9 +311,10 @@
       <li><a href="#why">なぜこの順番か</a></li>
       <li class="stage"><a href="#s1"><b>1</b>要件定義</a></li>
       <li class="stage"><a href="#s2"><b>2</b>仕様書</a></li>
-      <li class="stage"><a href="#s3"><b>3</b>タスク分解</a></li>
-      <li class="stage"><a href="#s4"><b>4</b>Issue登録</a></li>
-      <li class="stage"><a href="#s5"><b>5</b>実行</a></li>
+      <li class="stage"><a href="#s3"><b>3</b>設計書</a></li>
+      <li class="stage"><a href="#s4"><b>4</b>タスク分解</a></li>
+      <li class="stage"><a href="#s5"><b>5</b>Issue登録</a></li>
+      <li class="stage"><a href="#s6"><b>6</b>実行</a></li>
       <li><a href="#claude-code">Claude Codeで回す場合</a></li>
       <li><a href="#next">次の一歩</a></li>
     </ol>
@@ -323,11 +324,11 @@
     <section class="block" id="flow">
       <h2>全体の流れ</h2>
       <p>
-        5段あります。各段は「前の段の成果物を受け取り、次の段の成果物を作る」だけの単純な受け渡しです。本題は最初の4段で、5段目の実行はここで作ったIssueを1本ずつ消化する作業になります。
+        6段あります。各段は「前の段の成果物を受け取り、次の段の成果物を作る」だけの単純な受け渡しです。本題は最初の5段で、6段目の実行はここで作ったIssueを1本ずつ消化する作業になります。
       </p>
       <figure>
         <div class="fig-scroll">
-        <svg viewBox="0 0 1000 250" role="img" aria-label="5段の流れ。頭の中の構想から要件定義、仕様書、タスク分解、Issue登録へと成果物が受け渡され、最後の実行ではIssueを1本ずつ処理する。最初の4段が本題。" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 1030 250" role="img" aria-label="6段の流れ。頭の中の構想から要件定義、仕様書、設計書、タスク分解、Issue登録へと成果物が受け渡され、最後の実行ではIssueを1本ずつ処理する。最初の5段が本題。" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
               <path d="M0,0 L10,5 L0,10 z" fill="currentColor"></path>
@@ -335,59 +336,66 @@
           </defs>
           <g fill="none" stroke="currentColor" stroke-width="1.4" font-family="Noto Sans JP, Hiragino Sans, sans-serif" font-size="13">
             <!-- stage boxes -->
-            <rect x="20" y="70" width="160" height="60" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"></rect>
-            <rect x="220" y="70" width="160" height="60" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"></rect>
-            <rect x="420" y="70" width="160" height="60" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"></rect>
-            <rect x="620" y="70" width="160" height="60" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"></rect>
-            <rect x="820" y="70" width="160" height="60" rx="6" fill="var(--surface)" stroke="currentColor" stroke-dasharray="4 3"></rect>
+            <rect x="20" y="70" width="140" height="60" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"></rect>
+            <rect x="190" y="70" width="140" height="60" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"></rect>
+            <rect x="360" y="70" width="140" height="60" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"></rect>
+            <rect x="530" y="70" width="140" height="60" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"></rect>
+            <rect x="700" y="70" width="140" height="60" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"></rect>
+            <rect x="870" y="70" width="140" height="60" rx="6" fill="var(--surface)" stroke="currentColor" stroke-dasharray="4 3"></rect>
             <!-- stage numbers + names -->
             <g fill="currentColor" stroke="none" text-anchor="middle">
-              <text x="100" y="94" font-size="11" fill="var(--accent)">STAGE 1</text>
-              <text x="100" y="116" font-size="15" font-weight="700">要件定義</text>
-              <text x="300" y="94" font-size="11" fill="var(--accent)">STAGE 2</text>
-              <text x="300" y="116" font-size="15" font-weight="700">仕様書</text>
-              <text x="500" y="94" font-size="11" fill="var(--accent)">STAGE 3</text>
-              <text x="500" y="116" font-size="15" font-weight="700">タスク分解</text>
-              <text x="700" y="94" font-size="11" fill="var(--accent)">STAGE 4</text>
-              <text x="700" y="116" font-size="15" font-weight="700">Issue登録</text>
-              <text x="900" y="94" font-size="11">STAGE 5</text>
-              <text x="900" y="116" font-size="15" font-weight="700">実行</text>
+              <text x="90" y="94" font-size="11" fill="var(--accent)">STAGE 1</text>
+              <text x="90" y="116" font-size="15" font-weight="700">要件定義</text>
+              <text x="260" y="94" font-size="11" fill="var(--accent)">STAGE 2</text>
+              <text x="260" y="116" font-size="15" font-weight="700">仕様書</text>
+              <text x="430" y="94" font-size="11" fill="var(--accent)">STAGE 3</text>
+              <text x="430" y="116" font-size="15" font-weight="700">設計書</text>
+              <text x="600" y="94" font-size="11" fill="var(--accent)">STAGE 4</text>
+              <text x="600" y="116" font-size="15" font-weight="700">タスク分解</text>
+              <text x="770" y="94" font-size="11" fill="var(--accent)">STAGE 5</text>
+              <text x="770" y="116" font-size="15" font-weight="700">Issue登録</text>
+              <text x="940" y="94" font-size="11">STAGE 6</text>
+              <text x="940" y="116" font-size="15" font-weight="700">実行</text>
             </g>
-            <!-- arrows between boxes, labeled with the artifact handed over -->
-            <line x1="180" y1="100" x2="218" y2="100" marker-end="url(#arrow)"></line>
-            <line x1="380" y1="100" x2="418" y2="100" marker-end="url(#arrow)"></line>
-            <line x1="580" y1="100" x2="618" y2="100" marker-end="url(#arrow)"></line>
-            <line x1="780" y1="100" x2="818" y2="100" marker-end="url(#arrow)"></line>
+            <!-- arrows between boxes -->
+            <line x1="160" y1="100" x2="188" y2="100" marker-end="url(#arrow)"></line>
+            <line x1="330" y1="100" x2="358" y2="100" marker-end="url(#arrow)"></line>
+            <line x1="500" y1="100" x2="528" y2="100" marker-end="url(#arrow)"></line>
+            <line x1="670" y1="100" x2="698" y2="100" marker-end="url(#arrow)"></line>
+            <line x1="840" y1="100" x2="868" y2="100" marker-end="url(#arrow)"></line>
             <!-- artifacts below: what each stage produces -->
             <g stroke="currentColor" stroke-width="1.2">
-              <line x1="100" y1="130" x2="100" y2="156"></line>
-              <line x1="300" y1="130" x2="300" y2="156"></line>
-              <line x1="500" y1="130" x2="500" y2="156"></line>
-              <line x1="700" y1="130" x2="700" y2="156"></line>
-              <line x1="900" y1="130" x2="900" y2="156"></line>
+              <line x1="90" y1="130" x2="90" y2="156"></line>
+              <line x1="260" y1="130" x2="260" y2="156"></line>
+              <line x1="430" y1="130" x2="430" y2="156"></line>
+              <line x1="600" y1="130" x2="600" y2="156"></line>
+              <line x1="770" y1="130" x2="770" y2="156"></line>
+              <line x1="940" y1="130" x2="940" y2="156"></line>
             </g>
             <g fill="var(--code-bg)" stroke="currentColor" stroke-width="1">
-              <path d="M40,158 h112 l8,8 v36 h-120 z"></path>
-              <path d="M240,158 h112 l8,8 v36 h-120 z"></path>
-              <path d="M440,158 h112 l8,8 v36 h-120 z"></path>
-              <path d="M640,158 h112 l8,8 v36 h-120 z"></path>
-              <path d="M840,158 h112 l8,8 v36 h-120 z"></path>
+              <path d="M28,158 h116 l8,8 v36 h-124 z"></path>
+              <path d="M198,158 h116 l8,8 v36 h-124 z"></path>
+              <path d="M368,158 h116 l8,8 v36 h-124 z"></path>
+              <path d="M538,158 h116 l8,8 v36 h-124 z"></path>
+              <path d="M708,158 h116 l8,8 v36 h-124 z"></path>
+              <path d="M878,158 h116 l8,8 v36 h-124 z"></path>
             </g>
             <g fill="currentColor" stroke="none" text-anchor="middle" font-size="12">
-              <text x="100" y="185">要件定義書（1枚）</text>
-              <text x="300" y="185">仕様書</text>
-              <text x="500" y="185">タスク一覧（順番つき）</text>
-              <text x="700" y="185">子Issue #2 〜 #6</text>
-              <text x="900" y="185">動くアプリ + PR</text>
+              <text x="90" y="185">要件定義書（1枚）</text>
+              <text x="260" y="185">仕様書</text>
+              <text x="430" y="185">設計書</text>
+              <text x="600" y="185">タスク一覧（順番つき）</text>
+              <text x="770" y="185">子Issue #2 〜 #6</text>
+              <text x="940" y="185">動くアプリ + PR</text>
             </g>
             <!-- input from the left -->
             <text x="20" y="48" fill="currentColor" stroke="none" font-size="12">入力: 頭の中の構想</text>
-            <!-- loop on stage 5 -->
-            <path d="M960,70 C960,40 900,40 870,52" marker-end="url(#arrow)"></path>
-            <text x="915" y="36" fill="currentColor" stroke="none" font-size="11" text-anchor="middle">Issueを1本ずつ</text>
-            <!-- bracket under stages 1-4 -->
-            <path d="M20,222 v8 h760 v-8" stroke="var(--accent)" stroke-width="1.6"></path>
-            <text x="400" y="246" fill="var(--accent)" stroke="none" font-size="12" text-anchor="middle" font-weight="700">この4段が本題。ここで決めたことが、後の実行の質を決める</text>
+            <!-- loop on stage 6 -->
+            <path d="M1000,70 C1000,40 940,40 910,52" marker-end="url(#arrow)"></path>
+            <text x="955" y="36" fill="currentColor" stroke="none" font-size="11" text-anchor="middle">Issueを1本ずつ</text>
+            <!-- bracket under stages 1-5 -->
+            <path d="M20,222 v8 h820 v-8" stroke="var(--accent)" stroke-width="1.6"></path>
+            <text x="430" y="246" fill="var(--accent)" stroke="none" font-size="12" text-anchor="middle" font-weight="700">この5段が本題。ここで決めたことが、後の実行の質を決める</text>
           </g>
         </svg>
         </div>
@@ -404,7 +412,7 @@
         <li><b>小さく切ると、確認できる。</b>「アプリ全部」は動作確認のしようがありませんが、「日程候補に○×で答えられる」なら5分で確認できます。Issueはその確認単位を記録する場所です。</li>
       </ul>
       <p>
-        以下、5段それぞれを同じ型で説明します。目的、入力と出力、AIに渡すプロンプト、成果物のテンプレート、オフ会アプリでの例、完了チェック、よくある失敗の7項目です。プロンプトとテンプレートはそのままコピーして使えます。
+        以下、6段それぞれを同じ型で説明します。目的、入力と出力、AIに渡すプロンプト、成果物のテンプレート、オフ会アプリでの例、完了チェック、よくある失敗の7項目です。プロンプトとテンプレートはそのままコピーして使えます。
       </p>
     </section>
 
@@ -652,7 +660,7 @@
         <h3>よくある失敗</h3>
         <div class="pitfalls">
           <div class="pitfall"><b>仕様書が長くなりすぎる。</b>10画面を超えたら、要件定義書の「必須」が多すぎます。段1に戻って「あれば嬉しい」に降ろしてください。</div>
-          <div class="pitfall"><b>実装の話が混ざる。</b>「Supabaseで認証」「Reactで作る」は仕様ではなく手段です。ここで固めると、AIの選択肢を早く狭めすぎます。</div>
+          <div class="pitfall"><b>実装の話が混ざる。</b>「Supabaseで認証」「Reactで作る」は仕様ではなく手段です。手段は次の設計書（段3）で決めます。ここで固めると、仕様の議論と技術の議論が混ざって、どちらも決まりません。</div>
           <div class="pitfall"><b>提案を全部採用する。</b>AIの提案は、よくある機能を並べているだけのことが多いです。要件定義書の「困りごと」に効くものだけ採用します。</div>
         </div>
       </div>
@@ -663,6 +671,131 @@
       <div class="stage-head">
         <div class="stage-num">3</div>
         <div>
+          <h2>設計書</h2>
+          <p class="sub">「何があるか」を「どう作るか」に翻訳し、技術の選択を1か所に残す</p>
+          <p class="weight"><span class="main">本題</span></p>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>目的</h3>
+        <div>
+          <p>仕様書には技術を書きませんでした。設計書は、その仕様をどんな道具で、どんな形で作るかを決める段です。ここで初めて「使う技術」「データの持ち方」「権限の実現方法」が出てきます。</p>
+          <p>技術を自分で選べる必要はありません。AIに選ばせて、<b>理由を自分が読める言葉で書かせ</b>、決めたことを1か所に残します。設計書が無いと、AIは会話のたびに違う技術や違うデータの形を選び、Issueをまたいだ途端に噛み合わなくなります。</p>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>入力と出力</h3>
+        <div>
+          <dl class="io">
+            <dt>入力</dt><dd>段2の仕様書。</dd>
+            <dt>出力</dt><dd>設計書。使う技術と理由、画面の遷移、データの構造、権限の実現方法、外部サービス、動作確認の方法の6節。</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>プロンプト</h3>
+        <div>
+          <div class="prompt">
+            <div class="prompt-head"><span class="kind">AIに渡す</span><button class="copy" type="button">コピー</button></div>
+            <pre>下の仕様書をもとに、設計書を書いてください。私はコードを書かない人間で、この設計書を読んで「なぜこの技術なのか」を人に説明できる必要があります。
+
+守ってほしいこと:
+- 技術を選ぶときは、候補を2つまでに絞って比べ、推奨と理由を書く。理由は私が理解できる言葉で（例:「ログインとデータベースとホスティングが1つのサービスで済む」）
+- 無料か、少額で始められる構成にする
+- 仕様書に無い機能を足さない。設計の都合で仕様を変えたくなったら、変えずに「仕様書への相談」として末尾に分けて書く
+- 専門用語を使うときは、初出で一言の説明を付ける
+- 判断に迷う点があれば、書き始める前に私に質問する
+
+設計書の形:
+# 設計書
+## 使う技術と理由（何に何を使うか。候補と、選んだ理由）
+## 画面の遷移（どの画面からどの画面へ行けるか）
+## データの構造（表ごとに、項目と、表どうしのつながり）
+## 権限の実現方法（仕様書の「ルール」を、どこでどう守らせるか）
+## 外部サービス（メール送信など、外部に頼るもの）
+## 動作確認の方法（各タスクの完了条件を、誰のアカウントでどう確認するか）
+## 仕様書への相談（設計の都合で仕様を変えたい点。採用するかは私が決める）
+
+仕様書:
+<span class="var">{段2で作った仕様書をここに貼る}</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>例</h3>
+        <div>
+          <div class="example">
+            <div class="example-head"><span class="title">設計書（抜粋）</span></div>
+            <div class="example-body">
+              <h4>使う技術と理由</h4>
+              <ul>
+                <li>形態: スマホのブラウザで使うWebアプリ。アプリストアには出さない（参加者に「インストールして」と頼まなくて済む）</li>
+                <li>画面と処理: Next.js。候補は Next.js と Rails。AIが最も安定してコードを書け、次の Vercel でそのまま公開できるため Next.js を選ぶ</li>
+                <li>ログインとデータベース: Supabase。候補は Supabase と Firebase。データが普通の表（テーブル）で見られて、権限の規則をデータベース側に置けるため Supabase を選ぶ</li>
+                <li>公開: Vercel。Next.js の開発元で、無料枠で始められる</li>
+              </ul>
+              <h4>画面の遷移</h4>
+              <p>ログイン → オフ会一覧 → オフ会詳細。一覧から「新しく作る」でオフ会作成へ行き、作成後は詳細へ戻る。</p>
+              <h4>データの構造</h4>
+              <div class="table-scroll">
+              <table>
+                <tr><th>表</th><th>主な項目</th><th>つながり</th></tr>
+                <tr><td>利用者</td><td>表示名、メールアドレス</td><td>ログインの仕組みが持つ利用者と1対1</td></tr>
+                <tr><td>オフ会</td><td>名前、説明、会場、会費、主催者</td><td>主催者は「利用者」の1人</td></tr>
+                <tr><td>日程候補</td><td>日時、どのオフ会のものか</td><td>1つのオフ会に複数</td></tr>
+                <tr><td>出欠回答</td><td>誰が、どの日程候補に、○ △ × のどれか</td><td>利用者と日程候補の組み合わせにつき1行</td></tr>
+              </table>
+              </div>
+              <h4>権限の実現方法</h4>
+              <ul>
+                <li>「主催者だけが編集できる」は、オフ会の主催者欄とログイン中の利用者が同じかどうかで判定する</li>
+                <li>「他人の回答は変えられない」は、画面側だけでなくデータベース側の規則（RLS: 行ごとのアクセス制限）でも守らせる。画面のバグで破られないようにするため</li>
+              </ul>
+              <h4>外部サービス</h4>
+              <p>前日リマインドのメール送信に Resend を使う。無料枠で足りる。</p>
+              <h4>動作確認の方法</h4>
+              <p>主催者用と参加者用の2つのアカウントを用意し、各Issueの完了条件を両方の立場で手で確認する。</p>
+              <h4>仕様書への相談</h4>
+              <ul>
+                <li>出欠回答を「○ △ ×」の3択でなく「○ ×」の2択にすると集計が単純になる。ただし仕様書は3択なので、変えるなら仕様書側を直してから</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>完了チェック</h3>
+        <div>
+          <ul class="done">
+            <li>使う技術ごとに、理由が一文で書いてあり、自分が人に説明できる</li>
+            <li>「データの構造」の表が、仕様書の「扱うデータ」と一対一で対応している</li>
+            <li>仕様書の「ルール」がすべて、「権限の実現方法」のどこかで扱われている</li>
+            <li>仕様書に無い機能が増えていない。変えたい点は「仕様書への相談」に隔離されている</li>
+            <li>読んで分からない用語が残っていない（残っていたらAIに説明を足させる）</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>よくある失敗</h3>
+        <div class="pitfalls">
+          <div class="pitfall"><b>設計を飛ばして実装に入る。</b>AIは頼まれるたびに、そのとき最もらしい技術とデータの形を選びます。Issueが2本目に入った時点で、1本目と噛み合わなくなります。</div>
+          <div class="pitfall"><b>理解できない設計を承認する。</b>読めない設計書は、後で「なぜこうなっているの」と聞かれたときに答えられません。分からない箇所は、分かるまで説明を足させてから先へ進みます。</div>
+          <div class="pitfall"><b>設計の都合で仕様を書き換える。</b>「実装が楽だから機能を減らす」は、設計書の中で勝手にやらず、仕様書に戻って直します。仕様書と設計書が食い違うと、タスク分解がどちらを信じればいいか分からなくなります。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== STAGE 4 ========== -->
+    <section class="stage" id="s4">
+      <div class="stage-head">
+        <div class="stage-num">4</div>
+        <div>
           <h2>タスク分解</h2>
           <p class="sub">1回のAI作業で完成して、動作確認できる単位に切る</p>
           <p class="weight"><span class="main">本題</span></p>
@@ -672,7 +805,7 @@
       <div class="part">
         <h3>目的</h3>
         <div>
-          <p>仕様書をそのままAIに渡して「全部作って」と言うと、途中で壊れたときに戻る場所がありません。仕様書を、1つずつ完成させて確認できるタスクに切り、順番を決めます。</p>
+          <p>仕様書と設計書をそのままAIに渡して「全部作って」と言うと、途中で壊れたときに戻る場所がありません。仕様書の機能を、設計書の順序に沿って、1つずつ完成させて確認できるタスクに切り、順番を決めます。</p>
           <p>切り方の基準は一つです。<b>そのタスクだけが終わった状態で、自分で動かして「できた」と言えるか。</b>言えないなら、大きすぎるか、依存する別のタスクが先です。</p>
         </div>
       </div>
@@ -681,7 +814,7 @@
         <h3>入力と出力</h3>
         <div>
           <dl class="io">
-            <dt>入力</dt><dd>段2の仕様書。</dd>
+            <dt>入力</dt><dd>段2の仕様書と、段3の設計書。</dd>
             <dt>出力</dt><dd>タスク一覧。各タスクに、名前、完了条件、順番、依存があるもの。</dd>
           </dl>
         </div>
@@ -692,7 +825,7 @@
         <div>
           <div class="prompt">
             <div class="prompt-head"><span class="kind">AIに渡す</span><button class="copy" type="button">コピー</button></div>
-            <pre>下の仕様書を、開発タスクに分解してください。
+            <pre>下の仕様書と設計書をもとに、開発タスクに分解してください。
 
 タスクの条件:
 - 1つのタスクだけが終わった状態で、私がアプリを触って「できた」と確認できること
@@ -701,6 +834,7 @@
 - 各タスクに「完了条件」を書く。私が触って確認できる文にする（「〜が表示される」「〜を押すと〜になる」）
 - 順番を付け、前のタスクに依存する場合はそれを書く
 - 仕様書の「やらないこと」はタスクにしない
+- 設計書の「使う技術」を前提にする。技術を選び直さない
 
 出力の形（タスクごと）:
 ### タスク N: {名前}
@@ -713,7 +847,10 @@
 最後に、全体で何本になったかと、順番の理由を短く書いてください。
 
 仕様書:
-<span class="var">{段2で作った仕様書をここに貼る}</span></pre>
+<span class="var">{段2で作った仕様書をここに貼る}</span>
+
+設計書:
+<span class="var">{段3で作った設計書をここに貼る}</span></pre>
           </div>
         </div>
       </div>
@@ -727,7 +864,7 @@
           </div>
           <div class="rule">
             <b>親タスクは束ねるだけ。中身を持たない</b>
-            <p>「オフ会アプリ v1」のような親タスクを1つ作り、子タスクを列挙して進捗を見る場所にします。親自体には作業内容を書きません。段4で、親が勝手に閉じないための書き方を説明します。</p>
+            <p>「オフ会アプリ v1」のような親タスクを1つ作り、子タスクを列挙して進捗を見る場所にします。親自体には作業内容を書きません。段5で、親が勝手に閉じないための書き方を説明します。</p>
           </div>
           <div class="rule">
             <b>分けるなら、着手する前に全部分ける</b>
@@ -767,6 +904,7 @@
             <li>依存関係が一方向で、順に進めれば詰まらない</li>
             <li>要件定義書の「必須」がすべて、どれかのタスクに含まれている</li>
             <li>本数が3〜10本に収まっている（超えるなら仕様が大きすぎる）</li>
+            <li>設計書に無い技術や外部サービスが、タスクの中に出てきていない</li>
           </ul>
         </div>
       </div>
@@ -781,10 +919,10 @@
       </div>
     </section>
 
-    <!-- ========== STAGE 4 ========== -->
-    <section class="stage" id="s4">
+    <!-- ========== STAGE 5 ========== -->
+    <section class="stage" id="s5">
       <div class="stage-head">
-        <div class="stage-num">4</div>
+        <div class="stage-num">5</div>
         <div>
           <h2>Issue登録</h2>
           <p class="sub">タスクをGitHub Issueに書き、進捗と記録の置き場にする</p>
@@ -795,7 +933,7 @@
       <div class="part">
         <h3>目的</h3>
         <div>
-          <p>段3で作ったタスク一覧を、GitHubのIssueとして1本ずつ登録します。チャットのログやメモ帳ではなくIssueにする理由は4つあります。</p>
+          <p>段4で作ったタスク一覧を、GitHubのIssueとして1本ずつ登録します。チャットのログやメモ帳ではなくIssueにする理由は4つあります。</p>
           <ul>
             <li>番号が付く。「#3をやって」とAIにも人にも一言で渡せる</li>
             <li>完了条件がチェックリストとして残り、終わったかどうかを後から見返せる</li>
@@ -809,7 +947,7 @@
         <h3>入力と出力</h3>
         <div>
           <dl class="io">
-            <dt>入力</dt><dd>段3のタスク一覧。</dd>
+            <dt>入力</dt><dd>段4のタスク一覧。</dd>
             <dt>出力</dt><dd>GitHub Issue。子Issueがタスクの本数分と、それを束ねる親Issueが1本。</dd>
           </dl>
         </div>
@@ -825,7 +963,7 @@
 <span class="var">{何を作るか、1〜3文}</span>
 
 ## 背景と目的
-<span class="var">{要件定義書のどの困りごとに効くか。仕様書のどの画面・ルールに対応するか}</span>
+<span class="var">{要件定義書のどの困りごとに効くか。仕様書のどの画面・ルール、設計書のどの表に対応するか}</span>
 
 ## 対応チェックリスト
 - [ ] <span class="var">{作業の区切り1}</span>
@@ -931,7 +1069,8 @@ Refs #<span class="var">{親Issueの番号}</span></pre>
 
 ## 参照
 - 要件定義書: <span class="var">{置き場所へのリンク}</span>
-- 仕様書: <span class="var">{置き場所へのリンク}</span></pre>
+- 仕様書: <span class="var">{置き場所へのリンク}</span>
+- 設計書: <span class="var">{置き場所へのリンク}</span></pre>
           </div>
         </div>
       </div>
@@ -958,9 +1097,40 @@ Refs #<span class="var">{親Issueの番号}</span></pre>
 Refs #{親の番号}
 
 タスク一覧:
-<span class="var">{段3で作ったタスク一覧をここに貼る}</span></pre>
+<span class="var">{段4で作ったタスク一覧をここに貼る}</span></pre>
           </div>
-          <p style="margin-top:14px">GitHubのコマンドラインツール <code>gh</code> が入っている環境なら、「上の本文で <code>gh issue create</code> を実行して」と頼めば登録まで任せられます。親を先に作ると番号が確定するので、子の <code>Refs</code> に入れられます。</p>
+        </div>
+      </div>
+
+      <div class="part">
+        <h3>gh コマンド</h3>
+        <div>
+          <p>GitHubの画面でIssueを5本作るのは、手作業としては意外に重いです。GitHub公式のコマンドラインツール <code>gh</code> を入れると、ターミナルから1行でIssueを作れ、しかもその1行をAIにそのまま実行させられます。段5をAIに任せきる鍵はこの道具です。</p>
+          <p style="margin-top:12px">導入は3手順です。</p>
+          <ol class="steps" style="margin-top:8px">
+            <li>インストールする。Macは <code>brew install gh</code>、Windowsは <code>winget install GitHub.cli</code>。</li>
+            <li><code>gh auth login</code> を実行し、ブラウザでGitHubにログインして許可する。1回だけ。</li>
+            <li>アプリのフォルダがGitHubのリポジトリとつながっている（<code>git remote -v</code> でURLが出る）ことを確認する。</li>
+          </ol>
+          <div class="prompt" style="margin-top:16px">
+            <div class="prompt-head"><span class="kind">よく使う gh コマンド</span><button class="copy" type="button">コピー</button></div>
+            <pre># 親Issueを作る（本文はファイルから渡す。番号が返ってくる）
+gh issue create --title "chore: オフ会アプリ v1（親）" --body-file parent.md
+
+# 子Issueを作る（ラベルも同時に付ける）
+gh issue create --title "feat: 日程候補への出欠回答" --body-file issue-4.md --label enhancement
+
+# 一覧を見る / 1本を見る
+gh issue list
+gh issue view 4
+
+# 親Issueの本文を、子の番号が決まったあとで書き直す
+gh issue edit 1 --body-file parent.md
+
+# 終わったIssueを閉じる（PRの Closes #4 で自動的に閉じるなら不要）
+gh issue close 4</pre>
+          </div>
+          <p style="margin-top:14px">本文は <code>--body-file</code> でファイルから渡します。複数行や記号が崩れず、ファイルが手元に残るので後から見直せます。AIには「上の本文を <code>issue-4.md</code> に保存して、<code>gh issue create</code> で登録して」と頼めば、ファイル作成から登録まで任せられます。親を先に作ると番号が確定するので、子の <code>Refs</code> に入れられます。</p>
         </div>
       </div>
 
@@ -977,7 +1147,7 @@ Refs #{親の番号}
               <h4>概要</h4>
               <p>参加者がオフ会の各日程候補に ○ △ × で答えられるようにする。答えは選び直せる。</p>
               <h4>背景と目的</h4>
-              <p>要件定義書の困りごと「返事が流れて誰が来るのか数えられない」に対する中核機能。仕様書「オフ会詳細」画面と、データ「出欠回答」、ルール「他人の回答は変えられない」に対応する。</p>
+              <p>要件定義書の困りごと「返事が流れて誰が来るのか数えられない」に対する中核機能。仕様書「オフ会詳細」画面とルール「他人の回答は変えられない」、設計書の表「出欠回答」と権限の実現方法（データベース側の規則）に対応する。</p>
               <h4>対応チェックリスト</h4>
               <ul class="check">
                 <li>出欠回答のデータを保存できるようにする</li>
@@ -1004,7 +1174,7 @@ Refs #{親の番号}
             <li>親Issueに子が全部並び、「Refs で参照」と書いてある</li>
             <li>子Issueの本文に <code>Refs #親</code> があり、<code>Closes #親</code> になっていない</li>
             <li>タイトルに <code>feat:</code> などの接頭辞がある</li>
-            <li>要件定義書と仕様書の置き場所が、親Issueからリンクされている</li>
+            <li>要件定義書・仕様書・設計書の置き場所が、親Issueからリンクされている</li>
           </ul>
         </div>
       </div>
@@ -1013,16 +1183,16 @@ Refs #{親の番号}
         <h3>よくある失敗</h3>
         <div class="pitfalls">
           <div class="pitfall"><b>完了条件が無い。</b>Issueに「出欠機能」とだけ書くと、AIは自分の解釈で完成を宣言します。完了条件はAIへの依頼文であり、自分が確認するときのチェック表でもあります。</div>
-          <div class="pitfall"><b>1つのIssueに複数のタスク。</b>「作成と回答と集計」を1本にすると、途中で止まったときに何が終わっているのか分からなくなります。段3の切り方に戻ります。</div>
+          <div class="pitfall"><b>1つのIssueに複数のタスク。</b>「作成と回答と集計」を1本にすると、途中で止まったときに何が終わっているのか分からなくなります。段4の切り方に戻ります。</div>
           <div class="pitfall"><b>親を Closes で参照する。</b>最初の子がマージされた瞬間に親が閉じます。閉じた親は一覧から消え、残りの進捗を見失います。</div>
         </div>
       </div>
     </section>
 
-    <!-- ========== STAGE 5 ========== -->
-    <section class="stage thin" id="s5">
+    <!-- ========== STAGE 6 ========== -->
+    <section class="stage thin" id="s6">
       <div class="stage-head">
-        <div class="stage-num">5</div>
+        <div class="stage-num">6</div>
         <div>
           <h2>実行</h2>
           <p class="sub">Issueを1本ずつAIに渡し、完了条件を自分で確認して閉じる</p>
@@ -1033,7 +1203,7 @@ Refs #{親の番号}
       <div class="part">
         <h3>目的</h3>
         <div>
-          <p>ここまでで、AIに渡す単位と、終わったかどうかの判定基準が全部揃っています。実行は、その単位を上から順に消化する作業です。段1〜4が丁寧なら、ここは単純になります。</p>
+          <p>ここまでで、AIに渡す単位と、終わったかどうかの判定基準が全部揃っています。実行は、その単位を上から順に消化する作業です。段1〜5が丁寧なら、ここは単純になります。</p>
         </div>
       </div>
 
@@ -1042,7 +1212,7 @@ Refs #{親の番号}
         <div>
           <ol class="steps" style="margin-top:0">
             <li>次のIssueの番号を選ぶ。依存が終わっているものだけ。</li>
-            <li>AIにIssueの本文を渡して実装させる。会話の最初に仕様書も貼っておくと前提がぶれない。</li>
+            <li>AIにIssueの本文を渡して実装させる。会話の最初に仕様書と設計書も貼っておくと前提がぶれない。</li>
             <li>AIが「できた」と言ったら、<b>別の新しい会話</b>で、変更内容を見せてレビューさせる。同じ会話の中のAIは自分の仕事を甘く採点する。</li>
             <li>レビューで出た指摘を直させる。</li>
             <li>自分でアプリを触って、Issueの完了条件を1つずつ確認する。満たしていなければ2に戻る。</li>
@@ -1057,11 +1227,14 @@ Refs #{親の番号}
         <div>
           <div class="prompt">
             <div class="prompt-head"><span class="kind">実装させる</span><button class="copy" type="button">コピー</button></div>
-            <pre>次のIssueを実装してください。仕様書に無いことは足さないでください。
+            <pre>次のIssueを実装してください。仕様書に無いことは足さず、設計書で決めた技術とデータの構造を守ってください。
 完了条件をすべて満たしたと自分で確認できたら、何をどう確認したかを書いてから「できた」と報告してください。
 
 仕様書:
 <span class="var">{段2の仕様書}</span>
+
+設計書:
+<span class="var">{段3の設計書}</span>
 
 Issue #<span class="var">{番号}</span>:
 <span class="var">{Issueの本文をそのまま貼る}</span></pre>
@@ -1072,7 +1245,7 @@ Issue #<span class="var">{番号}</span>:
 
 確認してほしいこと:
 - Issue の完了条件が、本当に満たされるか。満たされない条件があれば、どの条件か
-- 仕様書に無い機能や変更が混ざっていないか
+- 仕様書に無い機能や、設計書と違う技術・データの形が混ざっていないか
 - 明らかに壊れそうな箇所（保存されない、他人のデータが見える、など）
 
 指摘は「場所、何が問題か、どう直すか」の3点で、重要な順に並べてください。
@@ -1100,7 +1273,7 @@ Issue #<span class="var">{番号}</span>:
       <div class="part">
         <h3>よくある失敗</h3>
         <div class="pitfalls">
-          <div class="pitfall"><b>AIの「できました」を信じてマージする。</b>完了条件は自分で触って確認するためのものです。ここを省くと、段1〜4の意味が無くなります。</div>
+          <div class="pitfall"><b>AIの「できました」を信じてマージする。</b>完了条件は自分で触って確認するためのものです。ここを省くと、段1〜5の意味が無くなります。</div>
           <div class="pitfall"><b>レビューを同じ会話でやる。</b>実装したAIに「問題ないか」と聞くと、ほぼ「問題ありません」と返ってきます。会話を分けるだけで指摘の質が変わります。</div>
           <div class="pitfall"><b>実行中に仕様を変える。</b>作りながら「やっぱりこうしたい」と思ったら、その場で足さず、新しいIssueにして親に追加します。今のIssueは今の完了条件で終わらせます。</div>
         </div>
@@ -1111,7 +1284,7 @@ Issue #<span class="var">{番号}</span>:
     <section class="block" id="claude-code">
       <h2>Claude Codeで回す場合</h2>
       <p>
-        著者はこの流れを Claude Code で回しています。上の5段は Claude Code が無くても成立しますが、Claude Code には「決まった手順をスラッシュコマンドとして保存する」機能があり、段3〜5の繰り返し部分をかなり自動化できます。
+        著者はこの流れを Claude Code で回しています。上の6段は Claude Code が無くても成立しますが、Claude Code には「決まった手順をスラッシュコマンドとして保存する」機能があり、段4〜6の繰り返し部分をかなり自動化できます。
       </p>
       <div class="cc-note">
         <b>先に一つ注意。</b>下に出てくる <code>/issue-create</code> や <code>/issue-complete</code> は、著者が自分用に作ったコマンドで、Claude Code に最初から入っているものではありません。素の Claude Code では、上の各段のプロンプトをそのまま貼れば同じことができます。コマンドは、同じプロンプトを何度も貼るのが面倒になってから作れば十分です。
@@ -1121,22 +1294,23 @@ Issue #<span class="var">{番号}</span>:
         <table>
           <tr><th>段</th><th>素の Claude Code でやること</th><th>著者が使っているコマンド／スキル</th><th>何が自動になるか</th></tr>
           <tr><td>1 要件定義</td><td>段1のプロンプトを貼って対話する</td><td>なし（対話そのもの）</td><td>自動化しない。ここは人が答える段</td></tr>
-          <tr><td>2 仕様書</td><td>段2のプロンプトを貼る</td><td>superpowers プラグインの brainstorming スキル（著者の自作ではなく公開プラグイン）</td><td>質問を1つずつ出し、合意した設計を日付つきのファイルに保存する</td></tr>
-          <tr><td>3 タスク分解</td><td>段3のプロンプトを貼る</td><td>なし（段2の対話の続きで行う）</td><td>分けるべきかの判断を、設計の段階で必ず聞く決まりにしている</td></tr>
-          <tr><td>4 Issue登録</td><td>段4のプロンプトを貼り、<code>gh issue create</code> を頼む</td><td><code>/issue-create</code>（自作）</td><td>自由文から4節の本文・接頭辞つきタイトル・ラベルを組み立て、確認1回で登録する</td></tr>
-          <tr><td>5 実行</td><td>段5の2つのプロンプトを、会話を分けて貼る</td><td><code>/issue-complete 番号</code>（自作）</td><td>下の4段を一気に回し、最後にレポートを出す</td></tr>
+          <tr><td>2 仕様書</td><td>段2のプロンプトを貼る</td><td>superpowers プラグインの brainstorming スキル（著者の自作ではなく公開プラグイン）</td><td>質問を1つずつ出して、仕様の穴を埋めていく</td></tr>
+          <tr><td>3 設計書</td><td>段3のプロンプトを貼る</td><td>同じ brainstorming スキルの後半</td><td>合意した設計を、日付つきのファイル（<code>docs/</code> 配下）に保存する。著者のプロジェクトでは仕様と設計を同じ対話で続けて決めている</td></tr>
+          <tr><td>4 タスク分解</td><td>段4のプロンプトを貼る</td><td>なし（段3の対話の続きで行う）</td><td>分けるべきかの判断を、設計の段階で必ず聞く決まりにしている</td></tr>
+          <tr><td>5 Issue登録</td><td>段5のプロンプトを貼り、<code>gh issue create</code> を頼む</td><td><code>/issue-create</code>（自作）</td><td>自由文から4節の本文・接頭辞つきタイトル・ラベルを組み立て、確認1回で登録する</td></tr>
+          <tr><td>6 実行</td><td>段6の2つのプロンプトを、会話を分けて貼る</td><td><code>/issue-complete 番号</code>（自作）</td><td>下の4段を一気に回し、最後にレポートを出す</td></tr>
         </table>
       </div>
 
       <h3 style="margin-top:32px; font-size:18px"><code>/issue-complete</code> の中身（4段の要約）</h3>
       <ol class="steps">
-        <li><b>設計。</b>Issueとプロジェクトの決まりを読み、実装計画をファイルに書く。ここは判断力の高いモデルに任せる。</li>
+        <li><b>設計。</b>Issueと、段3の設計書やプロジェクトの決まりを読み、そのIssue1本分の実装計画をファイルに書く。段3が全体の設計、こちらは1本分の手順書という関係。ここは判断力の高いモデルに任せる。</li>
         <li><b>実装。</b>計画に沿って、別の作業者（サブエージェント）がコードを書く。計画が良ければ、ここは速いモデルで足りる。</li>
-        <li><b>レビューと修正。</b>実装を知らない別のエージェントに差分だけを渡してレビューさせ、指摘を直す。指摘が出なくなるまで繰り返す。段5の手順3〜4を、機械的に何周も回す仕組み。</li>
+        <li><b>レビューと修正。</b>実装を知らない別のエージェントに差分だけを渡してレビューさせ、指摘を直す。指摘が出なくなるまで繰り返す。段6の手順3〜4を、機械的に何周も回す仕組み。</li>
         <li><b>報告。</b>何を作り、何を指摘され、何を直したかをまとめる。人はこれと完了条件を見てマージを判断する。</li>
       </ol>
       <p style="margin-top:16px">
-        趣味のアプリなら、ここまでの仕組みは不要です。段5のプロンプト2本を会話を分けて使えば、同じ効果の大半が得られます。
+        趣味のアプリなら、ここまでの仕組みは不要です。段6のプロンプト2本を会話を分けて使えば、同じ効果の大半が得られます。
       </p>
 
       <h3 style="margin-top:32px; font-size:18px">自作コマンドの作り方（さわりだけ）</h3>
@@ -1145,14 +1319,14 @@ Issue #<span class="var">{番号}</span>:
           <summary>スラッシュコマンドはただの Markdown ファイル</summary>
           <div>
             <p>プロジェクトの <code>.claude/commands/</code> に <code>issue-create.md</code> のようなファイルを置くと、<code>/issue-create</code> と打てるようになります。中身は「この手順でやって」という指示文で、上の各段のプロンプトをそのまま入れれば最初のコマンドになります。</p>
-            <p>まずは段4のプロンプトを <code>.claude/commands/issue-create.md</code> に保存するところから始めると、効果が分かりやすいです。</p>
+            <p>まずは段5のプロンプトを <code>.claude/commands/issue-create.md</code> に保存するところから始めると、効果が分かりやすいです。</p>
           </div>
         </details>
         <details>
           <summary>CLAUDE.md にプロジェクトの決まりを書く</summary>
           <div>
             <p>プロジェクト直下に <code>CLAUDE.md</code> というファイルを置くと、Claude Code は毎回それを読んでから作業します。「やらないこと」「Issueなしでコードを変えない」「タスクは1 Issue = 1 PR」のような決まりをここに書いておくと、会話のたびに言い直さずに済みます。</p>
-            <p>段1〜4で決めたことのうち、次の作業でも守ってほしいものを、少しずつここへ移していくのがおすすめです。</p>
+            <p>段1〜5で決めたことのうち、次の作業でも守ってほしいもの（特に設計書の「使う技術」）を、少しずつここへ移していくのがおすすめです。</p>
           </div>
         </details>
       </div>
@@ -1160,11 +1334,11 @@ Issue #<span class="var">{番号}</span>:
 
     <section class="block" id="next">
       <h2>次の一歩</h2>
-      <p>いきなり本命のアプリでやらず、まず小さな題材で1周してみてください。オフ会アプリなら、段1から段4までで1〜2時間、Issueは5本ほどです。</p>
+      <p>いきなり本命のアプリでやらず、まず小さな題材で1周してみてください。オフ会アプリなら、段1から段5までで2〜3時間、Issueは5本ほどです。</p>
       <ul>
         <li><b>1周したら、振り返りを3行書く。</b>どの段で迷ったか、どのIssueが大きすぎたか。次の題材で切り方が変わります。</li>
         <li><b>守れた決まりを、常設のメモに移す。</b>「やらないことを先に決める」「完了条件は触って確認できる文」など、自分に効いたルールを、AIが毎回読む場所（Claude Code なら <code>CLAUDE.md</code>）に書きます。</li>
-        <li><b>要件定義書と仕様書は、リポジトリに置く。</b>チャットの中に置いたままだと、次の会話から見えません。<code>docs/</code> のようなフォルダに置き、親Issueからリンクします。</li>
+        <li><b>要件定義書・仕様書・設計書は、リポジトリに置く。</b>チャットの中に置いたままだと、次の会話から見えません。<code>docs/</code> のようなフォルダに置き、親Issueからリンクします。</li>
       </ul>
     </section>
 
